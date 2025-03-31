@@ -8,23 +8,22 @@ services:
     image: strapi:latest
     env_file: backend/.env
     environment:
-      DATABASE_CLIENT: ${DATABASE_CLIENT}
+      DATABASE_CLIENT: mysql
       DATABASE_HOST: strapiDB
-      DATABASE_PORT: ${DATABASE_PORT}
-      DATABASE_NAME: ${DATABASE_NAME}
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      JWT_SECRET: ${JWT_SECRET}
-      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
-      APP_KEYS: ${APP_KEYS}
-      NODE_ENV: ${NODE_ENV}
+      DATABASE_PORT: 3306
+      DATABASE_NAME: audelweiss
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: root
+      JWT_SECRET:
+      ADMIN_JWT_SECRET: gwU7oC0TDrAzWwVlH4Hp3A==
+      APP_KEYS: l+dMjaYDsfUqk8q+/bzfhQ==,4r576C09BcLwwTWGxu9xtg==,Ix7OY5xRD6/LGDgQuFH2zA==,wcmYm9UciHxYXe8XLzuo+g==
     volumes:
-      - ./config:/opt/app/config
-      - ./src:/opt/app/src
-      - ./package.json:/opt/package.json
-      - ./yarn.lock:/opt/yarn.lock
-      - ./.env:/opt/app/.env
-      - ./public/uploads:/opt/app/public/uploads
+      - ./backend/config:/opt/app/config
+      - ./backend/src:/opt/app/src
+      - ./backend/package.json:/opt/package.json
+      - ./backend/yarn.lock:/opt/yarn.lock
+      - ./backend/.env:/opt/app/.env
+      - ./backend/public/uploads:/opt/app/public/uploads
     ports:
       - "1337:1337"
     networks:
@@ -34,17 +33,15 @@ services:
 
   strapiDB:
     container_name: strapiDB
-    platform: linux/amd64 #for platform error on Apple M1 chips
     env_file: backend/.env
     image: mysql:9.2.0
-    command: --default-authentication-plugin=mysql_native_password
     environment:
-      MYSQL_USER: ${DATABASE_USERNAME}
-      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
-      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
-      MYSQL_DATABASE: ${DATABASE_NAME}
+      MYSQL_USER: aw-user
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: aw-password
+      MYSQL_DATABASE: audelweiss
     volumes:
-      - strapi-data:/var/lib/mysql
+      - ./backend/strapi-data:/var/lib/mysql
       #- ./data:/var/lib/mysql # if you want to use a bind folder
     ports:
       - "3305:3306"
