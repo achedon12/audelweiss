@@ -1,5 +1,7 @@
-version: "3"
+version: '3.8'
+
 services:
+
   strapi:
     container_name: strapi
     build: backend
@@ -45,7 +47,16 @@ services:
       - strapi-data:/var/lib/mysql
       #- ./data:/var/lib/mysql # if you want to use a bind folder
     ports:
-      - "3306:3306"
+      - "3305:3306"
+    networks:
+      - strapi
+
+  mailer:
+    container_name: mailer
+    image: mailhog/mailhog
+    ports:
+      - "8023:8025"
+      - "1024:1025"
     networks:
       - strapi
 
