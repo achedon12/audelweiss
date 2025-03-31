@@ -1,5 +1,5 @@
 {
-  "name": "audelweiss",
+  "name": "backend",
   "version": "0.1.0",
   "private": true,
   "description": "A Strapi application",
@@ -9,7 +9,7 @@
     "deploy": "strapi deploy",
     "dev": "strapi develop",
     "develop": "strapi develop",
-    "seed:example": "node scripts/seed.js",
+    "seed:example": "node ./scripts/seed.js",
     "start": "strapi start",
     "strapi": "strapi",
     "upgrade": "npx @strapi/upgrade latest",
@@ -33,6 +33,6 @@
     "npm": ">=6.0.0"
   },
   "strapi": {
-    "uuid": "6a937d5d-56d1-42b2-9a39-3c7fd35a91fb"
+    "uuid": "db24e570-11b4-46b8-a3b1-00110ccbd475"
   }
 }
