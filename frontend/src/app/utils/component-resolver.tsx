@@ -1,4 +1,4 @@
-import { ReactElement, lazy, createElement, Suspense } from 'react';
+import {createElement, lazy, ReactElement, Suspense} from 'react';
 import Loader from '@/app/components/Common/Loader';
 
 export default function componentResolver(section: any, index: number) : ReactElement {
@@ -12,8 +12,8 @@ export default function componentResolver(section: any, index: number) : ReactEl
         componentName += capitalizeFirstLetter(s)
     })
     
-    const module = lazy(() => import( `../components/${componentName}`))
-    const reactElement = createElement(module, {data: section, key: index})
+    const moduleComponent = lazy(() => import( `../components/${componentName}`))
+    const reactElement = createElement(moduleComponent, {data: section, key: index})
 
     return (
         <Suspense fallback={<Loader />} key={index}>
