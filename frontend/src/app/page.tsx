@@ -4,7 +4,6 @@ export default function Home() {
   return (
       <>
           <ScrollUp />
-          <p>Au boulot !</p>
       </>
   );
 }
