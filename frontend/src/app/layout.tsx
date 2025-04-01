@@ -4,7 +4,10 @@ import {Providers} from "@/app/providers";
 import Index from "@/components/ScrollToTop";
 import {fetchAPI} from "@/app/utils/fetch-api";
 import Navbar from "@/components/Navbar";
+import React from "react";
+import ErrorPage from "@/app/error/page";
 import {getStrapiMedia} from "@/app/utils/api-helpers";
+
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -31,7 +34,8 @@ export default async function RootLayout({children, params}: {
     readonly params: { lang: string };
 }) {
     const global = await getGlobal(params.lang);
-    if (!global.data) return null;
+
+    if (!global.data) return (<ErrorPage />);
 
     const navbar = global.data.header;
     const navbarLogoUrl = getStrapiMedia(
