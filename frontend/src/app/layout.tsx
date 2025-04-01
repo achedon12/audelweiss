@@ -1,12 +1,14 @@
 import "./globals.css";
 import {Inter} from "next/font/google";
 import {Providers} from "@/app/providers";
-import Index from "@/components/ScrollToTop";
+import Index from "@/app/components/ScrollToTop";
 import {fetchAPI} from "@/app/utils/fetch-api";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/app/components/Navbar";
 import React from "react";
 import ErrorPage from "@/app/error/page";
-import {getStrapiMedia} from "@/app/utils/api-helpers";
+import {getStrapiMedia, getStrapiURL} from "@/app/utils/api-helpers";
+import {FALLBACK_SEO} from "@/app/utils/constants";
+import {Metadata} from "next";
 
 
 const inter = Inter({subsets: ["latin"]});
@@ -27,6 +29,22 @@ async function getGlobal(lang: string): Promise<any> {
         locale: lang,
     };
     return await fetchAPI(path, urlParamsObject, options);
+}
+
+export async function generateMetadata({ params } : { params: {lang: string}}): Promise<Metadata> {
+    const global = await getGlobal(params.lang);
+
+    if (!global.data) return FALLBACK_SEO;
+
+    const { siteName, siteDescription, favicon } = global.data;
+
+    return {
+        title: siteName,
+        description: siteDescription,
+        icons: {
+            icon: [new URL(favicon, getStrapiURL())],
+        },
+    };
 }
 
 export default async function RootLayout({children, params}: {
@@ -54,7 +72,11 @@ export default async function RootLayout({children, params}: {
                 logoUrl={navbarLogoUrl}
                 logoText={navbar.logo.alternativeText}
             />
-            {children}
+
+            <main className="dark:bg-black dark:text-gray-100 min-h-screen">
+                {children}
+            </main>
+
             <Index/>
         </Providers>
         </body>

@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import Logo from "@/components/Logo";
+import Logo from "@/app/components/Common/Logo";
 
 interface NavLink {
     id: number;
