@@ -33,7 +33,6 @@ export default async function RootLayout({children, params}: {
     if (!global.data) return null;
 
     const navbar = global.data.header;
-
     return (
         <html suppressHydrationWarning lang="en">
         <head>
@@ -44,7 +43,7 @@ export default async function RootLayout({children, params}: {
         <Providers>
             <Navbar
                 links={navbar.navLink}
-                logoUrl={""}
+                logoUrl={navbar.logo.url}
             />
             {children}
             <Index/>
