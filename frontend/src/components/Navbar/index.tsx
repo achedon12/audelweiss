@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import Logo from "@/components/Logo";
 
 interface NavLink {
     id: number;
@@ -53,9 +54,10 @@ function MobileNavLink({ url, text, closeMenu }: MobileNavLink) {
     );
 }
 
-export default function Navbar({links, logoUrl}: {
+export default function Navbar({links, logoUrl, logoText}: {
     links: Array<NavLink>;
     logoUrl: string | null;
+    logoText: string | null;
 }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const closeMenu = () => {
@@ -65,6 +67,9 @@ export default function Navbar({links, logoUrl}: {
     return (
         <div className="p-4 dark:bg-black dark:text-gray-100">
             <div className="container flex justify-between h-16 mx-auto px-0 sm:px-6">
+                <Logo src={logoUrl}>
+                    {logoText && <h2 className="text-2xl font-bold">{logoText}</h2>}
+                </Logo>
                 <div className="items-center flex-shrink-0 hidden lg:flex">
                     <ul className="items-stretch hidden space-x-3 lg:flex">
                         {links.map((item: NavLink) => (

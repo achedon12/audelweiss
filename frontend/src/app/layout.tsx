@@ -4,6 +4,7 @@ import {Providers} from "@/app/providers";
 import Index from "@/components/ScrollToTop";
 import {fetchAPI} from "@/app/utils/fetch-api";
 import Navbar from "@/components/Navbar";
+import {getStrapiMedia} from "@/app/utils/api-helpers";
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -33,6 +34,9 @@ export default async function RootLayout({children, params}: {
     if (!global.data) return null;
 
     const navbar = global.data.header;
+    const navbarLogoUrl = getStrapiMedia(
+        navbar.logo.url
+    );
     return (
         <html suppressHydrationWarning lang="en">
         <head>
@@ -43,7 +47,8 @@ export default async function RootLayout({children, params}: {
         <Providers>
             <Navbar
                 links={navbar.navLink}
-                logoUrl={navbar.logo.url}
+                logoUrl={navbarLogoUrl}
+                logoText={navbar.logo.alternativeText}
             />
             {children}
             <Index/>
