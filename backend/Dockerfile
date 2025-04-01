@@ -1,4 +1,4 @@
-FROM node:18-alpine3.18
+FROM node:18.20.8-alpine3.21
 
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
 
