@@ -60,7 +60,7 @@ export default function Page() {
                 <section
                     className="relative w-full flex flex-col ml-auto mr-auto md:flex-row md:justify-between md:w-[80%] p-8">
                     <article
-                        className="relative flex flex-col gap-2 text-left text-black w-full md:w-1/4 overflow-hidden">
+                        className="relative flex flex-col gap-2 text-left text-black w-full md:w-1/4 overflow-hidden md:overflow-visible">
                         <span className="text-awsalmon text-2xl">01</span>
                         <h2 className="uppercase text-2xl">Artisanats embrunais</h2>
                         <p>
@@ -73,7 +73,7 @@ export default function Page() {
                              className="absolute bottom-0 md:-right-1/2 w-full opacity-50 -right-1/3"/>
                     </article>
                     <article
-                        className="relative flex flex-col gap-2 text-left text-black w-full md:w-1/4 md:mt-12 overflow-hidden">
+                        className="relative flex flex-col gap-2 text-left text-black w-full md:w-1/4 md:mt-12 overflow-hidden md:overflow-visible">
                         <span className="text-awsalmon text-2xl">02</span>
                         <h2 className="uppercase text-2xl">Éditions limitées ou sur-mesure</h2>
                         <p>
@@ -87,7 +87,7 @@ export default function Page() {
                              className="absolute bottom-0 md:-right-1/2 w-full opacity-50 -right-1/3"/>
                     </article>
                     <article
-                        className="relative flex flex-col gap-2 text-left text-black w-full md:w-1/4 overflow-hidden">
+                        className="relative flex flex-col gap-2 text-left text-black w-full md:w-1/4 overflow-hidden md:overflow-visible">
                         <span className="text-awsalmon text-2xl">03</span>
                         <h2 className="uppercase text-2xl">Énergie et bien-être
                             avec le Reiki</h2>
