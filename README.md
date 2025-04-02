@@ -1,7 +1,6 @@
 # audelweiss
 
-site web (en ligne) : https://audelweiss.fr
-
+![image](logo.svg)
 
 # Backend
 
@@ -43,3 +42,7 @@ Make sure you have an env file
     STRAPI_API_TOKEN=
     STRAPI_API_URL=http://localhost:1337
 ```
+
+# Sources
+
+online website : https://audelweiss.fr
