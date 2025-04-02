@@ -91,7 +91,7 @@ export default function Navbar({links, logoUrl, logoText, iconLinks}: {
     };
 
     return (
-        <div className="py-4 px-10 dark:bg-awgray dark:text-awgray">
+        <div className="py-6 px-10 ">
             <div className="container flex justify-between h-16 mx-auto px-0 sm:px-6">
                 <Logo src={logoUrl}>
                     {logoText && <h2 className="text-2xl font-bold">{logoText}</h2>}
