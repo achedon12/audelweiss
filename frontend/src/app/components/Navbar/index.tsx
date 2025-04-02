@@ -39,7 +39,7 @@ function NavLink({url, text}: NavLink) {
         <li className="flex">
             <Link
                 href={url}
-                className={`flex items-center mx-2 -mb-1 font-bold text-sm ${path === url && "text-awsalmon border-awsalmon"}`}
+                className={`flex items-center mx-2 -mb-1 font-bold text-sm text-awblack ${path === url && "text-awsalmon border-awsalmon"}`}
             >
                 {text}
             </Link>
