@@ -31,10 +31,10 @@
       "required": true
     },
     "navbar": {
-      "displayName": "Navbar",
+      "displayName": "Header",
       "type": "component",
       "repeatable": false,
-      "component": "shared.navbar"
+      "component": "shared.header"
     }
   }
 }
