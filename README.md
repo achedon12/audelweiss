@@ -2,7 +2,7 @@
 
 ![image](logo.svg)
 
-# Backend 
+# Backend
 
 ## Installation
 
