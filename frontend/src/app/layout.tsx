@@ -64,7 +64,6 @@ export default async function RootLayout({children, params}: {
     const global = await getGlobal(params.lang);
 
     if (!global.data) return (<ErrorPage />);
-    console.log(global.data);
     const navbar = global.data.navbar;
     const navbarLogoUrl = getStrapiMedia(
         navbar.logo.url
@@ -80,7 +79,7 @@ export default async function RootLayout({children, params}: {
             <meta name="description" content={global.data.metaDescription}/>
             <link rel="icon" href={faviconUrl} type="image/png"/>
         </head>
-        <body className={`bg-[#FCFCFC] dark:bg-black ${font.className}`}>
+        <body className={`bg-white ${font.className}`}>
         <Providers>
             <Navbar
                 links={navbar.navLink}
@@ -89,7 +88,7 @@ export default async function RootLayout({children, params}: {
                 iconLinks={navbar.iconLink}
             />
 
-            <main className="dark:bg-black dark:text-gray-100 min-h-screen">
+            <main className="bg-white min-h-screen">
                 {children}
             </main>
 
