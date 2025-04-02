@@ -1,5 +1,5 @@
 import "./globals.css";
-import {Inter} from "next/font/google";
+import {DM_Sans} from "next/font/google";
 import {Providers} from "@/app/providers";
 import Index from "@/app/components/ScrollToTop";
 import {fetchAPI} from "@/app/utils/fetch-api";
@@ -10,8 +10,7 @@ import {getStrapiMedia, getStrapiURL} from "@/app/utils/api-helpers";
 import {FALLBACK_SEO} from "@/app/utils/constants";
 import {Metadata} from "next";
 
-
-const inter = Inter({subsets: ["latin"]});
+const font = DM_Sans({subsets: ["latin"]});
 
 async function getGlobal(lang: string): Promise<any> {
     const token = process.env.STRAPI_API_TOKEN;
@@ -23,8 +22,8 @@ async function getGlobal(lang: string): Promise<any> {
 
     const urlParamsObject = {
         populate: [
-            "header.logo",
-            "header.navLink"
+            "navbar.logo",
+            "navbar.navLink"
         ],
         locale: lang,
     };
@@ -55,7 +54,9 @@ export default async function RootLayout({children, params}: {
 
     if (!global.data) return (<ErrorPage />);
 
-    const navbar = global.data.header;
+    console.log(global.data);
+
+    const navbar = global.data.navbar;
     const navbarLogoUrl = getStrapiMedia(
         navbar.logo.url
     );
@@ -65,7 +66,7 @@ export default async function RootLayout({children, params}: {
             <title>{global.data.siteName}</title>
             <meta name="description" content={global.data.metaDescription}/>
         </head>
-        <body className={`bg-[#FCFCFC] dark:bg-black ${inter.className}`}>
+        <body className={`bg-[#FCFCFC] dark:bg-black ${font.className}`}>
         <Providers>
             <Navbar
                 links={navbar.navLink}

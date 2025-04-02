@@ -1,9 +1,10 @@
-import type { Schema, Struct } from '@strapi/strapi';
+import type {Schema, Struct} from '@strapi/strapi';
 
 export interface SharedHeader extends Struct.ComponentSchema {
   collectionName: 'components_shared_headers';
   info: {
-    displayName: 'Header';
+    description: '';
+    displayName: 'Navbar';
   };
   attributes: {
     logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;

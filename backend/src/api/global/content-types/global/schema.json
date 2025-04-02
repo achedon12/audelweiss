@@ -30,11 +30,11 @@
       "type": "text",
       "required": true
     },
-    "header": {
-      "displayName": "Header",
+    "navbar": {
+      "displayName": "Navbar",
       "type": "component",
       "repeatable": false,
-      "component": "shared.header"
+      "component": "shared.navbar"
     }
   }
 }
