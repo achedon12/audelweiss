@@ -21,6 +21,12 @@
       "type": "component",
       "repeatable": true,
       "component": "shared.link"
+    },
+    "iconLink": {
+      "displayName": "iconLink",
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.icon-link"
     }
   }
 }

@@ -1,10 +1,11 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Dialog } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import {usePathname} from "next/navigation";
+import {Dialog} from "@headlessui/react";
+import {Bars3Icon, XMarkIcon} from "@heroicons/react/24/outline";
+import {useState} from "react";
 import Logo from "@/app/components/Common/Logo";
+import {getStrapiMedia} from "@/app/utils/api-helpers";
 
 interface NavLink {
     id: number;
@@ -13,7 +14,22 @@ interface NavLink {
     text: string;
 }
 
+interface IconLink {
+    id: number;
+    url: string;
+    isExternal: boolean;
+    icon: {
+        id: number;
+        url: string;
+        alternativeText: string;
+    };
+}
+
 interface MobileNavLink extends NavLink {
+    closeMenu: () => void;
+}
+
+interface MobileIconLink extends IconLink {
     closeMenu: () => void;
 }
 
@@ -24,11 +40,23 @@ function NavLink({ url, text }: NavLink) {
         <li className="flex">
             <Link
                 href={url}
-                className={`flex items-center mx-4 -mb-1 border-b-2 dark:border-transparent ${
-                    path === url && "dark:text-violet-400 dark:border-violet-400"
-                }}`}
+                className={`flex items-center mx-2 -mb-1 font-bold text-sm ${path === url && "text-[#E8A499] border-[#E8A499]"}}`}
             >
                 {text}
+            </Link>
+        </li>
+    );
+}
+
+function IconLink({ url, icon }: IconLink) {
+    const iconUrl = getStrapiMedia(icon.url);
+    return (
+        <li className="flex">
+            <Link
+                href={url}
+                className="flex items-center mx-2 -mb-1 font-bold text-xs"
+            >
+                <img src={iconUrl} alt={icon.alternativeText} className="h-6 w-6" />
             </Link>
         </li>
     );
@@ -54,10 +82,11 @@ function MobileNavLink({ url, text, closeMenu }: MobileNavLink) {
     );
 }
 
-export default function Navbar({links, logoUrl, logoText}: {
+export default function Navbar({links, logoUrl, logoText, iconLinks}: {
     links: Array<NavLink>;
     logoUrl: string | null;
     logoText: string | null;
+    iconLinks: Array<IconLink>;
 }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const closeMenu = () => {
@@ -65,16 +94,21 @@ export default function Navbar({links, logoUrl, logoText}: {
     };
 
     return (
-        <div className="p-4 dark:bg-black dark:text-gray-100">
+        <div className="py-4 px-10 dark:bg-black dark:text-gray-100">
             <div className="container flex justify-between h-16 mx-auto px-0 sm:px-6">
                 <Logo src={logoUrl}>
                     {logoText && <h2 className="text-2xl font-bold">{logoText}</h2>}
                 </Logo>
                 <div className="items-center flex-shrink-0 hidden lg:flex">
-                    <ul className="items-stretch hidden space-x-3 lg:flex">
+                    <ul className="items-stretch hidden space-x-1 lg:flex">
                         {links.map((item: NavLink) => (
                             <NavLink key={item.id} {...item} />
                         ))}
+                        <li className="flex">
+                            {iconLinks.map((item: IconLink) => (
+                                <IconLink key={item.id} {...item} />
+                            ))}
+                        </li>
                     </ul>
                 </div>
                 <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>

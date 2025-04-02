@@ -1,4 +1,4 @@
-import type { Schema, Struct } from '@strapi/strapi';
+import type {Schema, Struct} from '@strapi/strapi';
 
 export interface SharedHeader extends Struct.ComponentSchema {
   collectionName: 'components_shared_headers';
@@ -7,8 +7,22 @@ export interface SharedHeader extends Struct.ComponentSchema {
     displayName: 'Navbar';
   };
   attributes: {
+    iconLink: Schema.Attribute.Component<'shared.icon-link', true>;
     logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     navLink: Schema.Attribute.Component<'shared.link', true>;
+  };
+}
+
+export interface SharedIconLink extends Struct.ComponentSchema {
+  collectionName: 'components_shared_icon_links';
+  info: {
+    description: '';
+    displayName: 'iconLink';
+  };
+  attributes: {
+    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    isExternal: Schema.Attribute.Boolean;
+    url: Schema.Attribute.String;
   };
 }
 
@@ -92,6 +106,7 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'shared.header': SharedHeader;
+      'shared.icon-link': SharedIconLink;
       'shared.link': SharedLink;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
