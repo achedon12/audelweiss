@@ -67,7 +67,7 @@ export default function Footer({ leftColumn, rightColumn, logo, centerText, soci
 
     return (
         <footer className="bg-awblack p-2 mt-10">
-            <section className={`flex flex-col ${isLargeScreen ? "md:flex-row" : "flex-col"} gap-2 items-baseline justify-between mx-auto py-10 w-[80%]`}>
+            <section className={`flex flex-col ${isLargeScreen ? "md:flex-row" : "flex-col"} gap-2 items-baseline justify-between mx-auto pt-10 w-[80%]`}>
                 {isLargeScreen ? (
                     <>
                         <FooterColumn title={leftColumn.title} link={leftColumn.link} orientation="left" />
@@ -88,7 +88,7 @@ export default function Footer({ leftColumn, rightColumn, logo, centerText, soci
                     </>
                 )}
             </section>
-            <section className="flex flex-col items-center gap-6 mx-auto py-10 w-[80%]">
+            <section className="flex flex-col items-center gap-6 mx-auto pb-16 w-[80%]">
                 <p className="text-center text-awgray text-base">{mediaDescription}</p>
                 <div className="flex gap-2">
                     {socialMedias.map((item: { url: string, icon: { url: string, alternativeText: string } }) => (
