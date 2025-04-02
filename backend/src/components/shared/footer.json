@@ -1,0 +1,46 @@
+{
+  "collectionName": "components_shared_footers",
+  "info": {
+    "displayName": "Footer",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "leftColumn": {
+      "displayName": "linkColumn",
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.link-column"
+    },
+    "rightColumn": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.link-column"
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "centerText": {
+      "type": "text"
+    },
+    "credentials": {
+      "type": "string"
+    },
+    "socialMedias": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.icon-link"
+    },
+    "mediaDescription": {
+      "type": "text"
+    }
+  }
+}
