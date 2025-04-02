@@ -40,7 +40,7 @@ function NavLink({ url, text }: NavLink) {
         <li className="flex">
             <Link
                 href={url}
-                className={`flex items-center mx-2 -mb-1 font-bold text-sm ${path === url && "text-[#E8A499] border-[#E8A499]"}}`}
+                className={`flex items-center mx-2 -mb-1 font-bold text-sm ${path === url && "text-awsalmon border-awsalmon"}}`}
             >
                 {text}
             </Link>
@@ -104,11 +104,11 @@ export default function Navbar({links, logoUrl, logoText, iconLinks}: {
                         {links.map((item: NavLink) => (
                             <NavLink key={item.id} {...item} />
                         ))}
-                        <li className="flex">
+                        <div className="flex">
                             {iconLinks.map((item: IconLink) => (
                                 <IconLink key={item.id} {...item} />
                             ))}
-                        </li>
+                        </div>
                     </ul>
                 </div>
                 <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>

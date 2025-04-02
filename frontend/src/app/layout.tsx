@@ -9,7 +9,7 @@ import ErrorPage from "@/app/error/page";
 import {getStrapiMedia, getStrapiURL} from "@/app/utils/api-helpers";
 import {FALLBACK_SEO} from "@/app/utils/constants";
 import {Metadata} from "next";
-import Footer from "@/app/components/Footer/Index";
+import Footer from "@/app/components/Footer";
 
 const font = DM_Sans({subsets: ["latin"]});
 
@@ -28,6 +28,13 @@ async function getGlobal(lang: string): Promise<any> {
             "navbar.iconLink",
             "navbar.iconLink.icon",
             "favicon",
+            "footer.leftColumn",
+            "footer.leftColumn.link",
+            "footer.rightColumn",
+            "footer.rightColumn.link",
+            "footer.logo",
+            "footer.socialMedias",
+            "footer.socialMedias.icon",
         ],
         locale: lang,
     };
@@ -62,6 +69,9 @@ export default async function RootLayout({children, params}: {
     const navbarLogoUrl = getStrapiMedia(
         navbar.logo.url
     );
+    const footerLogoUrl = getStrapiMedia(
+        global.data.footer.logo.url
+    );
     const faviconUrl = getStrapiMedia(global.data.favicon.url);
     return (
         <html suppressHydrationWarning lang="en">
@@ -84,7 +94,15 @@ export default async function RootLayout({children, params}: {
             </main>
 
             <Index/>
-            <Footer />
+            <Footer
+                leftColumn={global.data.footer.leftColumn}
+                rightColumn={global.data.footer.rightColumn}
+                logo={footerLogoUrl}
+                centerText={global.data.footer.centerText}
+                socialMedias={global.data.footer.socialMedias}
+                credentials={global.data.footer.credentials}
+                mediaDescription={global.data.footer.mediaDescription}
+            />
         </Providers>
         </body>
         </html>
