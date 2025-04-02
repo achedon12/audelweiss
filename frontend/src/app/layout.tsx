@@ -9,6 +9,7 @@ import ErrorPage from "@/app/error/page";
 import {getStrapiMedia, getStrapiURL} from "@/app/utils/api-helpers";
 import {FALLBACK_SEO} from "@/app/utils/constants";
 import {Metadata} from "next";
+import Footer from "@/app/components/Footer/Index";
 
 const font = DM_Sans({subsets: ["latin"]});
 
@@ -79,6 +80,7 @@ export default async function RootLayout({children, params}: {
             </main>
 
             <Index/>
+            <Footer />
         </Providers>
         </body>
         </html>

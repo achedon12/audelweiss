@@ -1,4 +1,4 @@
-import type {Schema, Struct} from '@strapi/strapi';
+import type { Schema, Struct } from '@strapi/strapi';
 
 export interface SharedHeader extends Struct.ComponentSchema {
   collectionName: 'components_shared_headers';
