@@ -597,7 +597,7 @@ export interface ApiSellersPageSellersPage extends Struct.SingleTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    article: Schema.Attribute.Component<'shared.content-article', true>;
+    articles: Schema.Attribute.Component<'shared.content-article', true>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
