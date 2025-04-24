@@ -2,9 +2,9 @@ export function getStrapiURL(path = '') {
     return `${process.env.NEXT_PUBLIC_STRAPI_API_URL || 'http://localhost:1337'}${path}`;
 }
 
-export function getStrapiMedia(url: string | undefined) {
+export function getStrapiMedia(url: string | undefined): string {
     if (url == null) {
-        return undefined;
+        return '';
     }
 
     if (url.startsWith('http') || url.startsWith('//')) {

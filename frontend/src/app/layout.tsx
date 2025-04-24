@@ -88,7 +88,7 @@ export default async function RootLayout({children, params}: {
                 iconLinks={navbar.iconLink}
             />
 
-            <main className="bg-white min-h-screen">
+            <main className="bg-white min-h-screen text-black">
                 {children}
             </main>
 
