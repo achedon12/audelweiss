@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shared_custom_titles",
+  "info": {
+    "displayName": "CustomTitle"
+  },
+  "options": {},
+  "attributes": {
+    "beginPart": {
+      "type": "string"
+    },
+    "coloredPart": {
+      "type": "string"
+    },
+    "lastPart": {
+      "type": "string"
+    }
+  }
+}

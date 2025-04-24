@@ -1,0 +1,27 @@
+{
+  "kind": "singleType",
+  "collectionName": "indices",
+  "info": {
+    "singularName": "index",
+    "pluralName": "indices",
+    "displayName": "Index"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.custom-title"
+    },
+    "secondTitle": {
+      "type": "text"
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.link"
+    }
+  }
+}
