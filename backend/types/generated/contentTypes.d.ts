@@ -1,4 +1,4 @@
-import type {Schema, Struct} from '@strapi/strapi';
+import type { Schema, Struct } from '@strapi/strapi';
 
 export interface AdminApiToken extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_api_tokens';
@@ -559,27 +559,28 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   };
 }
 
-export interface ApiIndexIndex extends Struct.SingleTypeSchema {
-  collectionName: 'indices';
+export interface ApiSellersPageSellersPage extends Struct.SingleTypeSchema {
+  collectionName: 'sellers_pages';
   info: {
-    displayName: 'Index';
-    pluralName: 'indices';
-    singularName: 'index';
+    displayName: 'SellersPage';
+    pluralName: 'sellers-pages';
+    singularName: 'sellers-page';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    button: Schema.Attribute.Component<'shared.link', false>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::index.index'> &
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::sellers-page.sellers-page'
+    > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    secondTitle: Schema.Attribute.Text;
-    title: Schema.Attribute.Component<'shared.custom-title', false>;
+    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1100,7 +1101,7 @@ declare module '@strapi/strapi' {
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
       'api::global.global': ApiGlobalGlobal;
-      'api::index.index': ApiIndexIndex;
+      'api::sellers-page.sellers-page': ApiSellersPageSellersPage;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

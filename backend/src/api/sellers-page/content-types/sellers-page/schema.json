@@ -1,0 +1,17 @@
+{
+  "kind": "singleType",
+  "collectionName": "sellers_pages",
+  "info": {
+    "singularName": "sellers-page",
+    "pluralName": "sellers-pages",
+    "displayName": "SellersPage"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    }
+  }
+}
