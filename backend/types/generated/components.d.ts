@@ -1,4 +1,16 @@
-import type { Schema, Struct } from '@strapi/strapi';
+import type {Schema, Struct} from '@strapi/strapi';
+
+export interface SharedCustomTitle extends Struct.ComponentSchema {
+  collectionName: 'components_shared_custom_titles';
+  info: {
+    displayName: 'CustomTitle';
+  };
+  attributes: {
+    beginPart: Schema.Attribute.String;
+    coloredPart: Schema.Attribute.String;
+    lastPart: Schema.Attribute.String;
+  };
+}
 
 export interface SharedCustomTitle extends Struct.ComponentSchema {
   collectionName: 'components_shared_custom_titles';
