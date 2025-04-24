@@ -1,14 +1,15 @@
-import type {Schema, Struct} from '@strapi/strapi';
+import type { Schema, Struct } from '@strapi/strapi';
 
-export interface SharedCustomTitle extends Struct.ComponentSchema {
-  collectionName: 'components_shared_custom_titles';
+export interface SharedContentArticle extends Struct.ComponentSchema {
+  collectionName: 'components_shared_content_articles';
   info: {
-    displayName: 'CustomTitle';
+    displayName: 'contentArticle';
+    icon: 'archive';
   };
   attributes: {
-    beginPart: Schema.Attribute.String;
-    coloredPart: Schema.Attribute.String;
-    lastPart: Schema.Attribute.String;
+    content: Schema.Attribute.RichText;
+    place: Schema.Attribute.String;
+    title: Schema.Attribute.String;
   };
 }
 
@@ -158,6 +159,7 @@ export interface SharedSlider extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'shared.content-article': SharedContentArticle;
       'shared.custom-title': SharedCustomTitle;
       'shared.footer': SharedFooter;
       'shared.header': SharedHeader;

@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_shared_content_articles",
+  "info": {
+    "displayName": "contentArticle",
+    "icon": "archive"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "place": {
+      "type": "string"
+    },
+    "content": {
+      "type": "richtext"
+    }
+  }
+}
