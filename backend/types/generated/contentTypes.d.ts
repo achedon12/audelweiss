@@ -1,4 +1,4 @@
-import type { Schema, Struct } from '@strapi/strapi';
+import type {Schema, Struct} from '@strapi/strapi';
 
 export interface AdminApiToken extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_api_tokens';
@@ -571,8 +571,7 @@ export interface ApiIndexIndex extends Struct.SingleTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    button: Schema.Attribute.Component<'shared.link', false>;
-    coloredText: Schema.Attribute.Component<'shared.multiple-text', true>;
+    banner: Schema.Attribute.Component<'index.banner', false>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -580,8 +579,6 @@ export interface ApiIndexIndex extends Struct.SingleTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::index.index'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    secondTitle: Schema.Attribute.Text;
-    title: Schema.Attribute.Component<'shared.custom-title', false>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

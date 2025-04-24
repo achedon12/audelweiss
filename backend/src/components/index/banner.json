@@ -1,0 +1,38 @@
+{
+  "collectionName": "components_index_banners",
+  "info": {
+    "displayName": "Banner"
+  },
+  "options": {},
+  "attributes": {
+    "img": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "title_beginPart": {
+      "type": "string"
+    },
+    "title_coloredText": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.multiple-text"
+    },
+    "title_endPart": {
+      "type": "string"
+    },
+    "secondTitle": {
+      "type": "text"
+    },
+    "buttonRedirecting": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.link"
+    }
+  }
+}

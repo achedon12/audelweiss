@@ -11,23 +11,10 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "title": {
+    "banner": {
       "type": "component",
       "repeatable": false,
-      "component": "shared.custom-title"
-    },
-    "secondTitle": {
-      "type": "text"
-    },
-    "button": {
-      "type": "component",
-      "repeatable": false,
-      "component": "shared.link"
-    },
-    "coloredText": {
-      "type": "component",
-      "repeatable": true,
-      "component": "shared.multiple-text"
+      "component": "index.banner"
     }
   }
 }
