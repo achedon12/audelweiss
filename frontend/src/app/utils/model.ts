@@ -1,3 +1,7 @@
+export interface ArticleContent {
+
+}
+
 // type StrapiResponse<T> = {
 //     data: T;
 //     message: string;

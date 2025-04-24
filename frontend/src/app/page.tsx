@@ -12,7 +12,9 @@ async function getIndex(lang: string): Promise<any> {
     const options = {headers: {Authorization: `Bearer ${token}`}};
 
     const urlParamsObject = {
-        populate: [],
+        populate: [
+            'banner',
+        ],
         locale: lang,
     };
     return await fetchAPI(path, urlParamsObject, options);

@@ -1,4 +1,19 @@
-import type { Schema, Struct } from '@strapi/strapi';
+import type {Schema, Struct} from '@strapi/strapi';
+
+export interface IndexBanner extends Struct.ComponentSchema {
+  collectionName: 'components_index_banners';
+  info: {
+    displayName: 'Banner';
+  };
+  attributes: {
+    buttonRedirecting: Schema.Attribute.Component<'shared.link', false>;
+    img: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    secondTitle: Schema.Attribute.Text;
+    title_beginPart: Schema.Attribute.String;
+    title_coloredText: Schema.Attribute.Component<'shared.multiple-text', true>;
+    title_endPart: Schema.Attribute.String;
+  };
+}
 
 export interface SharedContentArticle extends Struct.ComponentSchema {
   collectionName: 'components_shared_content_articles';
@@ -169,6 +184,7 @@ export interface SharedSlider extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'index.banner': IndexBanner;
       'shared.content-article': SharedContentArticle;
       'shared.custom-title': SharedCustomTitle;
       'shared.footer': SharedFooter;
