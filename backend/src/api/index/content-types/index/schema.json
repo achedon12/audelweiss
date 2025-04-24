@@ -4,7 +4,8 @@
   "info": {
     "singularName": "index",
     "pluralName": "indices",
-    "displayName": "Index"
+    "displayName": "Index",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -22,6 +23,11 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.link"
+    },
+    "coloredText": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.multiple-text"
     }
   }
 }

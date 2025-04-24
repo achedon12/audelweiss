@@ -16,11 +16,11 @@ export interface SharedContentArticle extends Struct.ComponentSchema {
 export interface SharedCustomTitle extends Struct.ComponentSchema {
   collectionName: 'components_shared_custom_titles';
   info: {
+    description: '';
     displayName: 'CustomTitle';
   };
   attributes: {
     beginPart: Schema.Attribute.String;
-    coloredPart: Schema.Attribute.String;
     lastPart: Schema.Attribute.String;
   };
 }
@@ -105,6 +105,16 @@ export interface SharedMedia extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedMultipleText extends Struct.ComponentSchema {
+  collectionName: 'components_shared_multiple_texts';
+  info: {
+    displayName: 'MultipleText';
+  };
+  attributes: {
+    entry: Schema.Attribute.String;
+  };
+}
+
 export interface SharedQuote extends Struct.ComponentSchema {
   collectionName: 'components_shared_quotes';
   info: {
@@ -167,6 +177,7 @@ declare module '@strapi/strapi' {
       'shared.link': SharedLink;
       'shared.link-column': SharedLinkColumn;
       'shared.media': SharedMedia;
+      'shared.multiple-text': SharedMultipleText;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;

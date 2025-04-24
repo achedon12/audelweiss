@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_shared_multiple_texts",
+  "info": {
+    "displayName": "MultipleText"
+  },
+  "options": {},
+  "attributes": {
+    "entry": {
+      "type": "string"
+    }
+  }
+}

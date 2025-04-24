@@ -562,6 +562,7 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
 export interface ApiIndexIndex extends Struct.SingleTypeSchema {
   collectionName: 'indices';
   info: {
+    description: '';
     displayName: 'Index';
     pluralName: 'indices';
     singularName: 'index';
@@ -571,6 +572,7 @@ export interface ApiIndexIndex extends Struct.SingleTypeSchema {
   };
   attributes: {
     button: Schema.Attribute.Component<'shared.link', false>;
+    coloredText: Schema.Attribute.Component<'shared.multiple-text', true>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

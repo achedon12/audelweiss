@@ -1,6 +1,32 @@
 import {getStrapiMedia} from "@/app/utils/api-helpers";
+import {fetchAPI} from "@/app/utils/fetch-api";
+import React from "react";
+import ErrorPage from "@/app/error/page";
 
-export default function Page() {
+async function getIndex(lang: string): Promise<any> {
+    const token = process.env.STRAPI_API_TOKEN;
+
+    if (!token) throw new Error("The Strapi API Token environment variable is not set.");
+
+    const path = `/index`;
+    const options = {headers: {Authorization: `Bearer ${token}`}};
+
+    const urlParamsObject = {
+        populate: [],
+        locale: lang,
+    };
+    return await fetchAPI(path, urlParamsObject, options);
+}
+
+
+export default async function Page({params}: {
+    readonly params: { lang: string };
+}) {
+    const index = await getIndex(params.lang);
+    console.log(index);
+
+    if (!index.data) return (<ErrorPage />);
+
 
     const navbarLogoUrl = getStrapiMedia('/uploads/bg2-e1739024515127.png.webp');
     const pubUrl = getStrapiMedia('/uploads/tag.png.webp');
