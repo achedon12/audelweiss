@@ -41,6 +41,8 @@ async function getGlobal(lang: string): Promise<any> {
     return await fetchAPI(path, urlParamsObject, options);
 }
 
+//TODO: vérifier si utile, les données meta sont chargées en double avec
+/*
 export async function generateMetadata({ params } : { params: {lang: string}}): Promise<Metadata> {
     const global = await getGlobal(params.lang);
 
@@ -48,14 +50,17 @@ export async function generateMetadata({ params } : { params: {lang: string}}): 
 
     const { siteName, siteDescription, favicon } = global.data;
 
+    console.log(favicon);
+
     return {
         title: siteName,
         description: siteDescription,
         icons: {
-            icon: [new URL(favicon, getStrapiURL())],
+            icon: [new URL(favicon, getStrapiURL(favicon.url))],
         },
     };
 }
+*/
 
 export default async function RootLayout({children, params}: {
     readonly children: React.ReactNode;
