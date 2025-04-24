@@ -4,7 +4,8 @@
   "info": {
     "singularName": "sellers-page",
     "pluralName": "sellers-pages",
-    "displayName": "SellersPage"
+    "displayName": "SellersPage",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -12,6 +13,9 @@
   "attributes": {
     "title": {
       "type": "string"
+    },
+    "subtitle": {
+      "type": "text"
     }
   }
 }

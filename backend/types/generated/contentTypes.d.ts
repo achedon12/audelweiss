@@ -559,9 +559,37 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiIndexIndex extends Struct.SingleTypeSchema {
+  collectionName: 'indices';
+  info: {
+    displayName: 'Index';
+    pluralName: 'indices';
+    singularName: 'index';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    button: Schema.Attribute.Component<'shared.link', false>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::index.index'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    secondTitle: Schema.Attribute.Text;
+    title: Schema.Attribute.Component<'shared.custom-title', false>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiSellersPageSellersPage extends Struct.SingleTypeSchema {
   collectionName: 'sellers_pages';
   info: {
+    description: '';
     displayName: 'SellersPage';
     pluralName: 'sellers-pages';
     singularName: 'sellers-page';
@@ -580,6 +608,7 @@ export interface ApiSellersPageSellersPage extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    subtitle: Schema.Attribute.Text;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1101,6 +1130,7 @@ declare module '@strapi/strapi' {
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
       'api::global.global': ApiGlobalGlobal;
+      'api::index.index': ApiIndexIndex;
       'api::sellers-page.sellers-page': ApiSellersPageSellersPage;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
