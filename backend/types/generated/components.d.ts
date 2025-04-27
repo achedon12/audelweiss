@@ -40,6 +40,18 @@ export interface SharedCustomTitle extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedFaqItem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_faq_items';
+  info: {
+    displayName: 'faq-item';
+    icon: 'question';
+  };
+  attributes: {
+    question: Schema.Attribute.String;
+    response: Schema.Attribute.RichText;
+  };
+}
+
 export interface SharedFooter extends Struct.ComponentSchema {
   collectionName: 'components_shared_footers';
   info: {
@@ -187,6 +199,7 @@ declare module '@strapi/strapi' {
       'index.banner': IndexBanner;
       'shared.content-article': SharedContentArticle;
       'shared.custom-title': SharedCustomTitle;
+      'shared.faq-item': SharedFaqItem;
       'shared.footer': SharedFooter;
       'shared.header': SharedHeader;
       'shared.icon-link': SharedIconLink;
