@@ -1,7 +1,8 @@
 import {fetchAPI} from "@/app/utils/fetch-api";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
-const SellersPage = async ({ params } : { params: {lang: string}}) => {
-
+const SellersPage = async ({params}: { params: { lang: string } }) => {
     const getSellers = async (lang: string): Promise<any> => {
         const token = process.env.STRAPI_API_TOKEN;
 
@@ -20,9 +21,7 @@ const SellersPage = async ({ params } : { params: {lang: string}}) => {
     }
 
     const pageContent = await getSellers(params.lang);
-    const { title, subtitle, articles } = pageContent.data;
-
-    console.log('pageContent', pageContent);
+    const {title, subtitle, articles} = pageContent.data;
 
     return (
         <div className="h-full w-full flex flex-col items-center">
@@ -34,10 +33,18 @@ const SellersPage = async ({ params } : { params: {lang: string}}) => {
                 <section>
                     {
                         articles.map((article: any) => (
-                            <article key={article.id} className="my-4">
-                                <h2 className="text-2xl">{article.title}</h2>
-                                <span>{article.place}</span>
-                                <p>{article.content}</p>
+                            <article key={article.id} className="my-4 flex flex-col gap-2">
+                                <h2 className="text-2xl uppercase">{article.title}</h2>
+                                <span className="text-awgraylight">{article.place}</span>
+                                <ReactMarkdown
+                                    remarkPlugins={[remarkGfm]}
+                                    components={{
+                                        ul: ({node, ...props}) => <ul className="list-disc pl-5" {...props} />,
+                                        ol: ({node, ...props}) => <ol className="list-decimal pl-5" {...props} />,
+                                        li: ({node, ...props}) => <li className="my-1" {...props} />,
+                                    }}>
+                                    {article.content}
+                                </ReactMarkdown>
                             </article>
                         ))
                     }

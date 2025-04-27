@@ -1,4 +1,4 @@
-import type {Schema, Struct} from '@strapi/strapi';
+import type { Schema, Struct } from '@strapi/strapi';
 
 export interface IndexBanner extends Struct.ComponentSchema {
   collectionName: 'components_index_banners';
