@@ -1,0 +1,22 @@
+{
+  "kind": "singleType",
+  "collectionName": "legals_mentions_pages",
+  "info": {
+    "singularName": "legals-mentions-page",
+    "pluralName": "legals-mentions-pages",
+    "displayName": "LegalsMentionsPage"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "content": {
+      "type": "richtext",
+      "required": true
+    }
+  }
+}

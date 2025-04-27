@@ -1,0 +1,20 @@
+{
+  "kind": "singleType",
+  "collectionName": "confidentiality_pages",
+  "info": {
+    "singularName": "confidentiality-page",
+    "pluralName": "confidentiality-pages",
+    "displayName": "confidentialityPage"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "richtext"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "kind": "singleType",
+  "collectionName": "cgv_pages",
+  "info": {
+    "singularName": "cgv-page",
+    "pluralName": "cgv-pages",
+    "displayName": "cgvPage"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "richtext"
+    }
+  }
+}
