@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_form_selects",
+  "info": {
+    "displayName": "select",
+    "icon": "information",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "placeholder": {
+      "type": "string"
+    },
+    "options": {
+      "type": "component",
+      "repeatable": true,
+      "component": "form.option"
+    }
+  }
+}

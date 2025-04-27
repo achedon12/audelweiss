@@ -22,8 +22,6 @@ const FaqPage = async ({params}: { params: { lang: string } }) => {
 
     const pageContent = await getFaq(params.lang);
 
-    console.log(pageContent.data);
-
     const {questions} = pageContent.data;
 
     return (

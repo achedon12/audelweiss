@@ -1,5 +1,32 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface FormOption extends Struct.ComponentSchema {
+  collectionName: 'components_form_options';
+  info: {
+    description: '';
+    displayName: 'option';
+  };
+  attributes: {
+    isDefault: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    name: Schema.Attribute.String;
+    value: Schema.Attribute.String;
+  };
+}
+
+export interface FormSelect extends Struct.ComponentSchema {
+  collectionName: 'components_form_selects';
+  info: {
+    description: '';
+    displayName: 'select';
+    icon: 'information';
+  };
+  attributes: {
+    name: Schema.Attribute.String;
+    options: Schema.Attribute.Component<'form.option', true>;
+    placeholder: Schema.Attribute.String;
+  };
+}
+
 export interface IndexBanner extends Struct.ComponentSchema {
   collectionName: 'components_index_banners';
   info: {
@@ -92,6 +119,18 @@ export interface SharedIconLink extends Struct.ComponentSchema {
     icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     isExternal: Schema.Attribute.Boolean;
     url: Schema.Attribute.String;
+  };
+}
+
+export interface SharedInput extends Struct.ComponentSchema {
+  collectionName: 'components_shared_inputs';
+  info: {
+    displayName: 'input';
+  };
+  attributes: {
+    name: Schema.Attribute.String;
+    placeholder: Schema.Attribute.String;
+    type: Schema.Attribute.String;
   };
 }
 
@@ -196,6 +235,8 @@ export interface SharedSlider extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'form.option': FormOption;
+      'form.select': FormSelect;
       'index.banner': IndexBanner;
       'shared.content-article': SharedContentArticle;
       'shared.custom-title': SharedCustomTitle;
@@ -203,6 +244,7 @@ declare module '@strapi/strapi' {
       'shared.footer': SharedFooter;
       'shared.header': SharedHeader;
       'shared.icon-link': SharedIconLink;
+      'shared.input': SharedInput;
       'shared.link': SharedLink;
       'shared.link-column': SharedLinkColumn;
       'shared.media': SharedMedia;

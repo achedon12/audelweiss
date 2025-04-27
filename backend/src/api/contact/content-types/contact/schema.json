@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "contacts",
+  "info": {
+    "singularName": "contact",
+    "pluralName": "contacts",
+    "displayName": "contact",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "string",
+      "unique": true,
+      "required": true
+    },
+    "contact_request": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::contact-request.contact-request"
+    },
+    "message": {
+      "type": "text"
+    }
+  }
+}
