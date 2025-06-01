@@ -232,6 +232,18 @@ export interface SharedSlider extends Struct.ComponentSchema {
   };
 }
 
+export interface WebsiteSeo extends Struct.ComponentSchema {
+  collectionName: 'components_website_seos';
+  info: {
+    description: '';
+    displayName: 'SEO';
+  };
+  attributes: {
+    metaDescription: Schema.Attribute.Text & Schema.Attribute.Required;
+    metaTitle: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
@@ -253,6 +265,7 @@ declare module '@strapi/strapi' {
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;
       'shared.slider': SharedSlider;
+      'website.seo': WebsiteSeo;
     }
   }
 }
