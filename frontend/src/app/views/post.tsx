@@ -25,7 +25,7 @@ export default function Post({data}: { data: Article }) {
 
     return (
         <article className="space-y-8 flex flex-col items-center justify-center py-8 px-4 md:px-8">
-            <div className="w-[80%] max-w-4xl mx-auto space-y-6 flex flex-col items-center">
+            <div className="w-[80%] max-w-7xl mx-auto space-y-6 flex flex-col items-center">
                 <div className="flex flex-col md:flex-row gap-8">
                     {imageUrl && (
                         <div className="flex-shrink-0">
