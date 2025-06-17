@@ -24,7 +24,7 @@ const LegalsMentionsPage = async ({params}: { params: { lang: string } }) => {
     return (
         <div className="h-full w-full flex flex-col items-center">
             <div className="w-full max-w-[50%] flex flex-col gap-8 pb-10 px-4 text-left">
-                <h1 className="text-center text-4xl font-bold mt-8">{title}</h1>
+                <h1 className="text-4xl text-center uppercase">{title}</h1>
                 <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     components={{

@@ -45,13 +45,16 @@ export interface IndexBanner extends Struct.ComponentSchema {
 export interface SharedContentArticle extends Struct.ComponentSchema {
   collectionName: 'components_shared_content_articles';
   info: {
+    description: '';
     displayName: 'contentArticle';
     icon: 'archive';
   };
   attributes: {
-    content: Schema.Attribute.RichText;
-    place: Schema.Attribute.String;
-    title: Schema.Attribute.String;
+    content: Schema.Attribute.RichText & Schema.Attribute.Required;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
+    place: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
