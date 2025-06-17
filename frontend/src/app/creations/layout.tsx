@@ -1,10 +1,19 @@
 "use client";
 import {ReactNode, useEffect, useState} from "react";
 import {fetchAPI} from "@/app/utils/fetch-api";
+import {usePathname, useSearchParams} from "next/navigation";
 import {CategoryFilterProvider, useCategoryFilter} from "./CategoryFilterContext";
 
 const CategoryButtons = ({categories}: { categories: any[] }) => {
     const {selectedCategory, setSelectedCategory} = useCategoryFilter();
+    const searchParams = useSearchParams();
+    const categoryParam = searchParams.get("category");
+
+    useEffect(() => {
+        if (categoryParam && categories.some(cat => cat.slug === categoryParam)) {
+            setSelectedCategory(categoryParam);
+        }
+    }, [categoryParam, categories, setSelectedCategory]);
 
     return (
         <div className="flex items-center justify-center flex-wrap gap-2 mb-6">
@@ -24,7 +33,7 @@ const CategoryButtons = ({categories}: { categories: any[] }) => {
                                             ${selectedCategory === cat.slug ? "bg-awsalmon/50 text-white" : "text-awsalmon"}
                                             transition-colors duration-200
                                         `}
-                    onClick={() => setSelectedCategory(cat.slug)}
+                    onClick={() => setSelectedCategory(cat.slug.toLowerCase())}
                 >
                     {cat.name}
                 </button>
@@ -35,6 +44,7 @@ const CategoryButtons = ({categories}: { categories: any[] }) => {
 
 export default function Layout({children}: { children: ReactNode }) {
     const [categories, setCategories] = useState<any[]>([]);
+    const pathname = usePathname();
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -55,7 +65,7 @@ export default function Layout({children}: { children: ReactNode }) {
 
     return (
         <CategoryFilterProvider>
-            <CategoryButtons categories={categories}/>
+            {pathname === "/creations" && <CategoryButtons categories={categories}/>}
             {children}
         </CategoryFilterProvider>
     );

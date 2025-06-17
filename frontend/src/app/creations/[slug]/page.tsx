@@ -1,5 +1,5 @@
 import {fetchAPI} from '@/app/utils/fetch-api';
-import Post from '@/app/views/post';
+import Creation from '@/app/views/creation';
 import type {Metadata} from 'next';
 
 async function getCreationBySlug(slug: string) {
@@ -44,10 +44,8 @@ export async function generateMetadata({params}: { params: { slug: string } }): 
 export default async function CreationRoute({params}: { params: { slug: string } }) {
     const {slug} = params;
     const data = await getCreationBySlug(slug);
-    console.log('Data:', data);
     if (data.data.length === 0) return <h2>Création non trouvée</h2>;
-    return <p>coucou</p>;
-    // return <Post data={data.data[0]}/>;
+    return <Creation data={data.data[0]}/>;
 }
 
 export async function generateStaticParams() {

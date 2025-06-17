@@ -74,7 +74,6 @@ const BlogPage = () => {
 
     if (isLoading) return <Loader/>;
 
-
     return (
         <div>
             <div className="flex flex-wrap justify-center gap-4">
@@ -83,7 +82,7 @@ const BlogPage = () => {
                 ) : (
                     filteredData.map((creation: any) => (
                         <Link
-                            href={`/creations/${creation?.slug}`}
+                            href={`/creations/${creation.slug}`}
                             key={creation.id}
                             className="flex justify-center items-center basis-1/2 md:basis-1/4"
                         >

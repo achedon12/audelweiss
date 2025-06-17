@@ -47,6 +47,9 @@
       "type": "component",
       "repeatable": false,
       "component": "website.seo"
+    },
+    "realisationTime": {
+      "type": "string"
     }
   }
 }

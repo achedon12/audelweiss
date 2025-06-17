@@ -735,6 +735,7 @@ export interface ApiCreationCreation extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    realisationTime: Schema.Attribute.String;
     seo: Schema.Attribute.Component<'website.seo', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
