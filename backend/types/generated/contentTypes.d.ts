@@ -705,6 +705,43 @@ export interface ApiCreationCategoryCreationCategory
   };
 }
 
+export interface ApiCreationCommentCreationComment
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'creation_comments';
+  info: {
+    description: '';
+    displayName: 'creationComment';
+    pluralName: 'creation-comments';
+    singularName: 'creation-comment';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    comment: Schema.Attribute.Text & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    creation: Schema.Attribute.Relation<'oneToOne', 'api::creation.creation'>;
+    email: Schema.Attribute.Email & Schema.Attribute.Required;
+    isPublish: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::creation-comment.creation-comment'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    website: Schema.Attribute.String;
+  };
+}
+
 export interface ApiCreationCreation extends Struct.CollectionTypeSchema {
   collectionName: 'creations';
   info: {
@@ -1440,6 +1477,7 @@ declare module '@strapi/strapi' {
       'api::contact-request.contact-request': ApiContactRequestContactRequest;
       'api::contact.contact': ApiContactContact;
       'api::creation-category.creation-category': ApiCreationCategoryCreationCategory;
+      'api::creation-comment.creation-comment': ApiCreationCommentCreationComment;
       'api::creation.creation': ApiCreationCreation;
       'api::delivery-page.delivery-page': ApiDeliveryPageDeliveryPage;
       'api::faq-page.faq-page': ApiFaqPageFaqPage;

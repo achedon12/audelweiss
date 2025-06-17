@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "creation_comments",
+  "info": {
+    "singularName": "creation-comment",
+    "pluralName": "creation-comments",
+    "displayName": "creationComment",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "comment": {
+      "type": "text",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "website": {
+      "type": "string"
+    },
+    "isPublish": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "creation": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::creation.creation"
+    }
+  }
+}

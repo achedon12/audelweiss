@@ -2,6 +2,7 @@ import {formatDate, getStrapiMedia} from '@/app/utils/api-helpers';
 import Image from 'next/image';
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
+import CreationComment from "@/app/components/Creation/CreationComment";
 
 const Creation = ({data}) => {
 
@@ -82,6 +83,7 @@ const Creation = ({data}) => {
                         }}>
                         {data.content}
                     </ReactMarkdown>
+                    <CreationComment slug={data.slug} />
                 </div>
             </div>
         </article>

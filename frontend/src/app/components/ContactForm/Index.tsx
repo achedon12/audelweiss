@@ -44,7 +44,7 @@ export default function ContactForm({optionsList}: {
             setMessage("");
         } catch (error) {
             console.error(error);
-            setSuccessMessage("Une erreur est survenue. Veuillez réessayer.");
+            setSuccessMessage(error.message || "Une erreur est survenue. Veuillez réessayer.");
         }
     };
 
