@@ -5,9 +5,9 @@ interface PageHeaderProps {
 
 const PageHeader = ({ heading, text } : PageHeaderProps) => {
     return (
-        <div className="w-full text-center">
-            <h2 className="text-4xl lg:text-5xl font-bold">{heading}</h2>
-            { text && <p className="font-bold text-lg lg:text-xl mt-4">{text}</p> }
+        <div className="w-full text-center flex flex-col items-center justify-center">
+            <h2 className="text-4xl lg:text-5xl font-bold max-w-1/2">{heading}</h2>
+            { text && <p className="text-lg lg:text-xl text-gray-600 mt-4 max-w-1/2">{text}</p> }
         </div>
     );
 }

@@ -671,6 +671,79 @@ export interface ApiContactContact extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCreationCategoryCreationCategory
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'creation_categories';
+  info: {
+    description: '';
+    displayName: 'creationCategory';
+    pluralName: 'creation-categories';
+    singularName: 'creation-category';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    creation: Schema.Attribute.Relation<'manyToOne', 'api::creation.creation'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::creation-category.creation-category'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCreationCreation extends Struct.CollectionTypeSchema {
+  collectionName: 'creations';
+  info: {
+    description: '';
+    displayName: 'creation';
+    pluralName: 'creations';
+    singularName: 'creation';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    content: Schema.Attribute.RichText & Schema.Attribute.Required;
+    cover: Schema.Attribute.Media<'images' | 'files'> &
+      Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    creation_categories: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::creation-category.creation-category'
+    >;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::creation.creation'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'website.seo', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiDeliveryPageDeliveryPage extends Struct.SingleTypeSchema {
   collectionName: 'delivery_pages';
   info: {
@@ -1365,6 +1438,8 @@ declare module '@strapi/strapi' {
       'api::contact-page.contact-page': ApiContactPageContactPage;
       'api::contact-request.contact-request': ApiContactRequestContactRequest;
       'api::contact.contact': ApiContactContact;
+      'api::creation-category.creation-category': ApiCreationCategoryCreationCategory;
+      'api::creation.creation': ApiCreationCreation;
       'api::delivery-page.delivery-page': ApiDeliveryPageDeliveryPage;
       'api::faq-page.faq-page': ApiFaqPageFaqPage;
       'api::global.global': ApiGlobalGlobal;

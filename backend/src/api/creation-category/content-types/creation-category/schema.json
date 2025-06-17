@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "creation_categories",
+  "info": {
+    "singularName": "creation-category",
+    "pluralName": "creation-categories",
+    "displayName": "creationCategory",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "slug": {
+      "type": "uid",
+      "required": true,
+      "targetField": "name"
+    },
+    "creation": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::creation.creation",
+      "inversedBy": "creation_categories"
+    }
+  }
+}
