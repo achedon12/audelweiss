@@ -13,3 +13,13 @@ export async function getCreationBySlug(slug: string) {
     const options = {headers: {Authorization: `Bearer ${token}`}};
     return await fetchAPI(path, urlParamsObject, options);
 }
+
+export async function getCreationCommentBySlug(slug: string) {
+    const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+    const path = `/creation-comments`;
+    const urlParamsObject = {
+        filters: {creation: {slug}, isPublish: true},
+    };
+    const options = {headers: {Authorization: `Bearer ${token}`}};
+    return await fetchAPI(path, urlParamsObject, options);
+}

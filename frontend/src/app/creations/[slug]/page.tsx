@@ -1,7 +1,7 @@
 import {fetchAPI} from '@/app/utils/fetch-api';
 import Creation from '@/app/views/creation';
 import type {Metadata} from 'next';
-import {getCreationBySlug} from "@/api/creation-by-slug";
+import {getCreationBySlug, getCreationCommentBySlug} from "@/api/creation/creation-by-slug";
 
 async function getMetaData(slug: string) {
     const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
@@ -30,9 +30,12 @@ export async function generateMetadata({params}: { params: { slug: string } }): 
 
 export default async function CreationRoute({params}: { params: { slug: string } }) {
     const {slug} = params;
+
     const data = await getCreationBySlug(slug);
+    const comments = await getCreationCommentBySlug(slug);
+
     if (data.data.length === 0) return <h2>Création non trouvée</h2>;
-    return <Creation data={data.data[0]}/>;
+    return <Creation data={data.data[0]} comments={comments.data}/>;
 }
 
 export async function generateStaticParams() {

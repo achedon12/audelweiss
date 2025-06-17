@@ -1,10 +1,32 @@
+"use client";
 import {formatDate, getStrapiMedia} from '@/app/utils/api-helpers';
 import Image from 'next/image';
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 import CreationComment from "@/app/components/Creation/CreationComment";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
-const Creation = ({data}) => {
+const responsive = {
+    superLargeDesktop: {
+        breakpoint: { max: 4000, min: 1280 },
+        items: 4,
+    },
+    desktop: {
+        breakpoint: { max: 1280, min: 1024 },
+        items: 3,
+    },
+    tablet: {
+        breakpoint: { max: 1024, min: 640 },
+        items: 2,
+    },
+    mobile: {
+        breakpoint: { max: 640, min: 0 },
+        items: 1,
+    },
+};
+
+const Creation = ({data, comments}) => {
 
     const {title, description, publishedAt, cover, realisationTime} = data;
     const imageUrl = getStrapiMedia(cover.url);
@@ -41,7 +63,7 @@ const Creation = ({data}) => {
                         <p>{description}</p>
                         {realisationTime && (
                             <p className="bg-awsalmon/50 p-2 rounded-lg text-dark">
-                            Temps de réalisation : {realisationTime}
+                                Temps de réalisation : {realisationTime}
                             </p>
                         )}
                     </div>
@@ -83,7 +105,34 @@ const Creation = ({data}) => {
                         }}>
                         {data.content}
                     </ReactMarkdown>
-                    <CreationComment slug={data.slug} />
+                    <CreationComment slug={data.slug}/>
+                    <div className="w-full mt-8">
+                        <h2 className="text-2xl font-bold mb-4">Commentaires</h2>
+                        {comments && comments.length > 0 ? (
+                            <Carousel
+                                responsive={responsive}
+                                additionalTransfrom={0}
+                                arrows
+                                infinite
+                                containerClass="py-2"
+                                itemClass="px-2"
+                            >
+                                {comments.map(c => (
+                                    <div key={c.id} className="bg-white rounded-lg shadow-md p-4">
+                                        <div className="flex items-center mb-2">
+                                            <span className="font-semibold">{c.name}</span>
+                                        </div>
+                                        <p className="text-gray-700 mb-2">{c.comment}</p>
+                                        <p className="text-sm text-gray-500">
+                                            Publié le {formatDate(c.publishedAt)}
+                                        </p>
+                                    </div>
+                                ))}
+                            </Carousel>
+                        ) : (
+                            <p className="text-gray-500">Aucun commentaire pour le moment.</p>
+                        )}
+                    </div>
                 </div>
             </div>
         </article>
