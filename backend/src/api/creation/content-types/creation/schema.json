@@ -36,8 +36,7 @@
     "creation_categories": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::creation-category.creation-category",
-      "mappedBy": "creation"
+      "target": "api::creation-category.creation-category"
     },
     "content": {
       "type": "richtext",

@@ -84,12 +84,12 @@ const BlogPage = () => {
                         <Link
                             href={`/creations/${creation.slug}`}
                             key={creation.id}
-                            className="flex justify-center items-center basis-1/2 md:basis-1/4"
+                            className="flex justify-center items-center basis-1/2 md:basis-1/5"
                         >
                             <img
                                 src={getStrapiMedia(creation.cover.url)}
                                 alt={creation.title}
-                                className="w-48 h-48 object-cover rounded-lg shadow-lg"
+                                className="w-96 h-full object-cover rounded-lg shadow-lg max-h-96 hover:shadow-xl transition-shadow duration-300"
                             />
                         </Link>
                     ))

@@ -20,12 +20,6 @@
       "type": "uid",
       "required": true,
       "targetField": "name"
-    },
-    "creation": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::creation.creation",
-      "inversedBy": "creation_categories"
     }
   }
 }

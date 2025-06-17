@@ -687,7 +687,6 @@ export interface ApiCreationCategoryCreationCategory
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    creation: Schema.Attribute.Relation<'manyToOne', 'api::creation.creation'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
