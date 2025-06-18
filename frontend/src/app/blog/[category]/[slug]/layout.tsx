@@ -7,7 +7,6 @@ async function getArticleTitle(slug: string) {
         filters: {slug},
         fields: ['title'],
     });
-    console.log('Response:', response);
     return response.data.length > 0 ? response.data[0].title : 'Article not found';
 }
 
@@ -16,9 +15,10 @@ export default async function layout({
                                          params,
                                      }: {
     children: ReactNode,
-    params: { category: string; slug: string }
+    params: Promise<{ category: string; slug: string }>
 }) {
-    const title = await getArticleTitle(params.slug);
+    const {category, slug} = await params;
+    const title = await getArticleTitle(slug);
 
     return (
         <div>
@@ -26,8 +26,8 @@ export default async function layout({
                 <nav className="w-[80%] text-white max-w-7xl mx-auto gap-1 flex flex-row items-center">
                     <Link href="/" className="underline">Accueil</Link> &gt;{" "}
                     <Link href="/blog" className="underline">Blog</Link> &gt;{" "}
-                    <Link href={`/blog/${params.category}`}
-                          className="underline">{params.category}</Link> &gt;{" "}
+                    <Link href={`/blog/${category}`}
+                          className="underline">{category}</Link> &gt;{" "}
                     <span>{title}</span>
                 </nav>
             </header>

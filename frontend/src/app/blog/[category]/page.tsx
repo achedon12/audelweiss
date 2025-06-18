@@ -24,8 +24,8 @@ async function fetchPostsByCategory(filter: string) {
 }
 
 export default async function CategoryRoute({params}: { params: { category: string } }) {
-    const filter = params.category;
-    const {data} = await fetchPostsByCategory(filter);
+    const {category} = await params;
+    const {data} = await fetchPostsByCategory(category);
 
     //TODO: CREATE A COMPONENT FOR THIS
     if (data.length === 0) return <div>Not Posts In this category</div>;

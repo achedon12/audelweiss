@@ -17,9 +17,10 @@ export default async function layout({
                                          params,
                                      }: {
     children: ReactNode,
-    params: { slug: string }
+    params: Promise<{ slug: string }>
 }) {
-    const title = await getCreationTitle(params.slug);
+    const {slug} = await params;
+    const title = await getCreationTitle(slug);
     return (
         <div>
             <header className="bg-awsalmon space-y-8 flex flex-col items-center justify-center py-8 px-4 md:px-8">

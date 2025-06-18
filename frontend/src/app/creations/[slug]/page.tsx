@@ -12,7 +12,8 @@ async function getMetaData(slug: string) {
 }
 
 export async function generateMetadata({params}: { params: { slug: string } }): Promise<Metadata> {
-    const meta = await getMetaData(params.slug);
+    const {slug} = await params;
+    const meta = await getMetaData(slug);
     const metadata = meta[0]?.seo || {
         metaTitle: 'Default Title',
         metaDescription: 'Default description'
@@ -25,7 +26,7 @@ export async function generateMetadata({params}: { params: { slug: string } }): 
 }
 
 export default async function CreationRoute({params}: { params: { slug: string } }) {
-    const {slug} = params;
+    const {slug} = await params;
 
     const data = await getCreationBySlug(slug);
     const comments = await getCreationCommentBySlug(slug);
