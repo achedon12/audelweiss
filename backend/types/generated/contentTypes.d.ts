@@ -883,9 +883,14 @@ export interface ApiIndexIndex extends Struct.SingleTypeSchema {
   };
   attributes: {
     banner: Schema.Attribute.Component<'index.banner', false>;
+    categories: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::creation.creation'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    creations: Schema.Attribute.Relation<'oneToMany', 'api::creation.creation'>;
     IndexArticles: Schema.Attribute.Component<'shared.content-article', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::index.index'> &

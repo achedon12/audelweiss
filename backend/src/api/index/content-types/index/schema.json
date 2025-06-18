@@ -20,6 +20,16 @@
       "type": "component",
       "repeatable": true,
       "component": "shared.content-article"
+    },
+    "creations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::creation.creation"
+    },
+    "categories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::creation.creation"
     }
   }
 }

@@ -8,10 +8,13 @@ const nextConfig = {
                 hostname: 'localhost',
                 port: '1337',
                 pathname: '/uploads/**',
-            },
-            {
+            }, {
                 protocol: 'https',
                 hostname: 'images.pexels.com',
+            }, {
+                protocol: 'https',
+                hostname: 'audelweiss.fr',
+                pathname: '/wp-content/uploads/**',
             }
         ],
     },
