@@ -8,6 +8,7 @@ import React from "react";
 import ErrorPage from "@/app/error/page";
 import {getStrapiMedia} from "@/app/utils/api-helpers";
 import Footer from "@/components/Footer";
+import {UserProvider} from "@/providers/AuthContext";
 
 const font = DM_Sans({subsets: ["latin"]});
 
