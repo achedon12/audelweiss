@@ -1,8 +1,8 @@
 "use client";
 import {useCallback, useEffect, useState} from "react";
-import Loader from "@/app/components/Common/Loader";
-import Blog from "../views/blog-list";
-import PageHeader from "../components/PageHeader";
+import Loader from "@/components/Common/Loader";
+import Blog from "@/views/blog-list";
+import PageHeader from "@/components/PageHeader";
 import {getDataCollection} from "@/api/page/get-data-page";
 
 const BlogPage = () => {

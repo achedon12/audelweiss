@@ -1,4 +1,4 @@
-import Creation from '@/app/views/creation';
+import Creation from '@/views/creation';
 import type {Metadata} from 'next';
 import {getCreationBySlug, getCreationCommentBySlug} from "@/api/creation/creation-by-slug";
 import {getDataCollection} from "@/api/page/get-data-page";

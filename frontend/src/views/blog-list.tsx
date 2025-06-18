@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import {formatDate, getStrapiMedia} from "../utils/api-helpers";
+import {formatDate, getStrapiMedia} from "@/app/utils/api-helpers";
 import {ReactNode, useEffect} from "react";
 
 interface Article {

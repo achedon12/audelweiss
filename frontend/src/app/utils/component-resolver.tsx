@@ -1,5 +1,5 @@
 import {createElement, lazy, ReactElement, Suspense} from 'react';
-import Loader from '@/app/components/Common/Loader';
+import Loader from '@/components/Common/Loader';
 
 export default function componentResolver(section: any, index: number): ReactElement {
     const names: string[] = section.__component.split('.')

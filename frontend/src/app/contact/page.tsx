@@ -1,7 +1,7 @@
 import {getStrapiMedia} from "@/app/utils/api-helpers";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import ContactForm from "../../app/components/ContactForm/Index";
+import ContactForm from "@/components/ContactForm/Index";
 import {getDataPage} from "@/api/page/get-data-page";
 
 const ContactPage = async ({params}: { params: { lang: string } }) => {

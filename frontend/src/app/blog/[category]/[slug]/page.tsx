@@ -1,4 +1,4 @@
-import Post from '@/app/views/post';
+import Post from '@/views/post';
 import type {Metadata} from 'next';
 import {getDataCollection} from "@/api/page/get-data-page";
 

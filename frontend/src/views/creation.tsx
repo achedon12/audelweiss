@@ -3,7 +3,7 @@ import {formatDate, getStrapiMedia} from '@/app/utils/api-helpers';
 import Image from 'next/image';
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
-import CreationComment from "@/app/components/Creation/CreationComment";
+import CreationComment from "@/components/Creation/CreationComment";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 

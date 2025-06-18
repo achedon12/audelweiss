@@ -3,7 +3,7 @@ import Link from "next/link";
 import {usePathname} from "next/navigation";
 import {List} from "phosphor-react";
 import {useState} from "react";
-import Logo from "@/app/components/Common/Logo";
+import Logo from "@/components/Common/Logo";
 import {getStrapiMedia} from "@/app/utils/api-helpers";
 
 interface NavLink {

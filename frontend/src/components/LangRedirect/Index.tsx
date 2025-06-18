@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import {renderButtonStyle} from "@/app/utils/render-button-style";
-import HighlightedText from "@/app/components/HighlightedText/Index";
+import HighlightedText from "@/components/HighlightedText/Index";
 
 export default function LangRedirect() {
     return (

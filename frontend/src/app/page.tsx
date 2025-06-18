@@ -1,11 +1,11 @@
 import {getStrapiMedia} from "@/app/utils/api-helpers";
 import React from "react";
 import ErrorPage from "@/app/error/page";
-import AnimatedText from "@/app/components/AnimatedText/AnimatedText";
+import AnimatedText from "@/components/AnimatedText/AnimatedText";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
-import ProductSection from "@/app/components/ProductSection/ProductSection";
-import CategoriesSection from "@/app/components/CategoriesSection/CategoriesSection";
+import ProductSection from "@/components/ProductSection/ProductSection";
+import CategoriesSection from "@/components/CategoriesSection/CategoriesSection";
 import {getDataPage} from "@/api/page/get-data-page";
 
 const images = {

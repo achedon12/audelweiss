@@ -1,13 +1,13 @@
 import "./globals.css";
 import {DM_Sans} from "next/font/google";
 import {Providers} from "@/app/providers";
-import Index from "@/app/components/ScrollToTop";
+import Index from "@/components/ScrollToTop";
 import {fetchAPI} from "@/app/utils/fetch-api";
-import Navbar from "@/app/components/Navbar";
+import Navbar from "@/components/Navbar";
 import React from "react";
 import ErrorPage from "@/app/error/page";
 import {getStrapiMedia} from "@/app/utils/api-helpers";
-import Footer from "@/app/components/Footer";
+import Footer from "@/components/Footer";
 
 const font = DM_Sans({subsets: ["latin"]});
 

@@ -1,5 +1,5 @@
-import PageHeader from '@/app/components/PageHeader';
-import BlogList from '@/app/views/blog-list';
+import PageHeader from '@/components/PageHeader';
+import BlogList from '@/views/blog-list';
 import {getDataCollection} from "@/api/page/get-data-page";
 
 async function fetchPostsByCategory(filter: string) {

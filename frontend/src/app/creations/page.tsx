@@ -1,6 +1,6 @@
 "use client";
 import {useCallback, useEffect, useState} from "react";
-import Loader from "@/app/components/Common/Loader";
+import Loader from "@/components/Common/Loader";
 import {getStrapiMedia} from "@/app/utils/api-helpers";
 import Link from "next/link";
 import {useCategoryFilter} from "./CategoryFilterContext";
