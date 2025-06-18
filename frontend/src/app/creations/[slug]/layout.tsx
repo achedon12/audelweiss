@@ -1,25 +1,21 @@
 import {ReactNode} from "react";
 import Link from "next/link";
-import {fetchAPI} from "@/app/utils/fetch-api";
+import {getDataCollection} from "@/api/page/get-data-page";
 
 async function getCreationTitle(slug: string) {
-    const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
-    const path = `/creations`;
-    const urlParamsObject = {
+    const response = await getDataCollection('/creations', {
         filters: {
             slug: slug,
         },
         fields: ['title'],
-    };
-    const options = {headers: {Authorization: `Bearer ${token}`}};
-    const response = await fetchAPI(path, urlParamsObject, options);
+    });
     return response.data.length > 0 ? response.data[0].title : 'Article not found';
 }
 
 export default async function layout({
-     children,
-     params,
- }: {
+                                         children,
+                                         params,
+                                     }: {
     children: ReactNode,
     params: { slug: string }
 }) {

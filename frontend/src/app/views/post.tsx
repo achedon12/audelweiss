@@ -55,8 +55,10 @@ export default function Post({data}: { data: Article }) {
                         remarkPlugins={[remarkGfm]}
                         components={{
                             h1: ({node, ...props}) => <h1 className="my-4 text-4xl text-left uppercase" {...props} />,
-                            h2: ({node, ...props}) => <h2 className="my-4 text-3xl font-bold text-awsalmon" {...props} />,
-                            h3: ({node, ...props}) => <h3 className="my-4 text-2xl font-bold text-aworange" {...props} />,
+                            h2: ({node, ...props}) => <h2
+                                className="my-4 text-3xl font-bold text-awsalmon" {...props} />,
+                            h3: ({node, ...props}) => <h3
+                                className="my-4 text-2xl font-bold text-aworange" {...props} />,
                             a: ({node, ...props}) => (
                                 <a
                                     className="text-awpink"
@@ -69,7 +71,8 @@ export default function Post({data}: { data: Article }) {
                             ol: ({node, ...props}) => <ol className="list-decimal pl-5" {...props} />,
                             li: ({node, ...props}) => <li className="my-1" {...props} />,
                             table: ({node, ...props}) => (
-                                <table className="table-auto w-full border-collapse border border-gray-300" {...props} />
+                                <table
+                                    className="table-auto w-full border-collapse border border-gray-300" {...props} />
                             ),
                             th: ({node, ...props}) => (
                                 <th className="border border-gray-300 p-2 bg-gray-100" {...props} />

@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState} from "react";
 
-export default function AnimatedText({ texts }: { texts: { id: number; entry: string }[] }) {
+export default function AnimatedText({texts}: { texts: { id: number; entry: string }[] }) {
     const [currentText, setCurrentText] = useState("");
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isDeleting, setIsDeleting] = useState(false);

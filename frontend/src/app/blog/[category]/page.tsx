@@ -1,12 +1,10 @@
 import PageHeader from '@/app/components/PageHeader';
-import {fetchAPI} from '@/app/utils/fetch-api';
 import BlogList from '@/app/views/blog-list';
+import {getDataCollection} from "@/api/page/get-data-page";
 
 async function fetchPostsByCategory(filter: string) {
     try {
-        const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
-        const path = `/articles`;
-        const urlParamsObject = {
+        return await getDataCollection('/articles', {
             sort: {createdAt: 'desc'},
             filters: {
                 category: {
@@ -19,9 +17,7 @@ async function fetchPostsByCategory(filter: string) {
                     populate: '*',
                 }
             },
-        };
-        const options = {headers: {Authorization: `Bearer ${token}`}};
-        return await fetchAPI(path, urlParamsObject, options);
+        });
     } catch (error) {
         console.error(error);
     }

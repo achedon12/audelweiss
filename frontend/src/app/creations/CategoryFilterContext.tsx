@@ -6,12 +6,13 @@ export const CategoryFilterContext = createContext<{
     setSelectedCategory: (cat: string | null) => void
 }>({
     selectedCategory: null,
-    setSelectedCategory: () => {}
+    setSelectedCategory: () => {
+    }
 });
 
 export const useCategoryFilter = () => useContext(CategoryFilterContext);
 
-export function CategoryFilterProvider({children}: {children: React.ReactNode}) {
+export function CategoryFilterProvider({children}: { children: React.ReactNode }) {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     return (
         <CategoryFilterContext.Provider value={{selectedCategory, setSelectedCategory}}>

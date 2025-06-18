@@ -63,7 +63,8 @@
     "seo": {
       "type": "component",
       "repeatable": false,
-      "component": "website.seo"
+      "component": "website.seo",
+      "required": true
     }
   }
 }

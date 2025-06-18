@@ -1,8 +1,8 @@
 "use client";
 import {ReactNode, useEffect, useState} from "react";
-import {fetchAPI} from "@/app/utils/fetch-api";
 import {usePathname, useSearchParams} from "next/navigation";
 import {CategoryFilterProvider, useCategoryFilter} from "./CategoryFilterContext";
+import {getDataCollection} from "@/api/page/get-data-page";
 
 const CategoryButtons = ({categories}: { categories: any[] }) => {
     const {selectedCategory, setSelectedCategory} = useCategoryFilter();
@@ -49,11 +49,7 @@ export default function Layout({children}: { children: ReactNode }) {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
-                if (!token) throw new Error("Strapi API token is not defined");
-                const path = "/creation-categories";
-                const options = {headers: {Authorization: `Bearer ${token}`}};
-                const response = await fetchAPI(path, {sort: {name: "asc"}}, options);
+                const response = await getDataCollection('/creation-categories', {sort: {name: "asc"}});
                 if (!response || !response.data) throw new Error("Failed to fetch categories");
                 setCategories(response.data);
             } catch (error) {

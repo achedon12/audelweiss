@@ -1,30 +1,22 @@
-import {fetchAPI} from "@/app/utils/fetch-api";
 import {getStrapiMedia} from "@/app/utils/api-helpers";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import ContactForm from "../../app/components/ContactForm/Index";
+import {getDataPage} from "@/api/page/get-data-page";
 
 const ContactPage = async ({params}: { params: { lang: string } }) => {
     const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
     if (!token) throw new Error("The Strapi API Token environment variable is not set.");
 
-    const getContact = async (lang: string) => {
-        const path = `/contact-page`;
-        const options = {headers: {Authorization: `Bearer ${token}`}};
-        const urlParamsObject = {locale: lang, populate: ["image"]};
-        return await fetchAPI(path, urlParamsObject, options);
-    };
-
-    const getContactRequests = async (lang: string) => {
-        const path = `/contact-requests`;
-        const options = {headers: {Authorization: `Bearer ${token}`}};
-        const urlParamsObject = {locale: lang};
-        return await fetchAPI(path, urlParamsObject, options);
-    };
-
-    const pageContent = await getContact(params.lang);
-    const contactRequests = await getContactRequests(params.lang);
+    const pageContent = await getDataPage('/contact-page', {
+        locale: params.lang,
+        populate: ['image'],
+    });
+    const contactRequests = await getDataPage('/contact-requests', {
+        locale: params.lang,
+        populate: '*',
+    });
 
     const {title, description, image, imageDescription} = pageContent.data;
     const optionsList = contactRequests.data;

@@ -1,23 +1,13 @@
-import {fetchAPI} from "@/app/utils/fetch-api";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import {getDataPage} from "@/api/page/get-data-page";
 
 const ConfidentialityPage = async ({params}: { params: { lang: string } }) => {
-    const getConfidentiality = async (lang: string): Promise<any> => {
-        const token = process.env.STRAPI_API_TOKEN;
 
-        if (!token) throw new Error("The Strapi API Token environment variable is not set.");
-
-        const path = `/confidentiality-page`;
-        const options = {headers: {Authorization: `Bearer ${token}`}};
-
-        const urlParamsObject = {
-            locale: lang
-        }
-        return await fetchAPI(path, urlParamsObject, options);
-    }
-
-    const pageContent = await getConfidentiality(params.lang);
+    const pageContent = await getDataPage('/confidentiality-page', {
+        locale: params.lang,
+        populate: '*',
+    });
 
     const {title, content} = pageContent.data;
 
@@ -25,7 +15,8 @@ const ConfidentialityPage = async ({params}: { params: { lang: string } }) => {
         <div className="h-full w-full flex flex-col items-center">
             <div className="w-full max-w-4xl flex flex-col gap-8 pb-10 px-4 text-left">
                 <h1 className="text-4xl text-center uppercase">{title}</h1>
-                <p className="font-bold">Dernière mise à jour : {new Date(pageContent.data.updatedAt).toLocaleDateString("fr-FR")}</p>
+                <p className="font-bold">Dernière mise à jour
+                    : {new Date(pageContent.data.updatedAt).toLocaleDateString("fr-FR")}</p>
                 <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     components={{

@@ -1,23 +1,12 @@
-import {fetchAPI} from "@/app/utils/fetch-api";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import {getDataPage} from "@/api/page/get-data-page";
 
 const LegalsMentionsPage = async ({params}: { params: { lang: string } }) => {
-    const getLegalsMentions = async (lang: string): Promise<any> => {
-        const token = process.env.STRAPI_API_TOKEN;
 
-        if (!token) throw new Error("The Strapi API Token environment variable is not set.");
-
-        const path = `/legals-mentions-page`;
-        const options = {headers: {Authorization: `Bearer ${token}`}};
-
-        const urlParamsObject = {
-            locale: lang
-        }
-        return await fetchAPI(path, urlParamsObject, options);
-    }
-
-    const pageContent = await getLegalsMentions(params.lang);
+    const pageContent = await getDataPage('/legals-mentions-page', {
+        locale: params.lang
+    });
 
     const {title, content} = pageContent.data;
 

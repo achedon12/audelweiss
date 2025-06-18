@@ -6,9 +6,7 @@ import {fetchAPI} from "@/app/utils/fetch-api";
 import Navbar from "@/app/components/Navbar";
 import React from "react";
 import ErrorPage from "@/app/error/page";
-import {getStrapiMedia, getStrapiURL} from "@/app/utils/api-helpers";
-import {FALLBACK_SEO} from "@/app/utils/constants";
-import {Metadata} from "next";
+import {getStrapiMedia} from "@/app/utils/api-helpers";
 import Footer from "@/app/components/Footer";
 
 const font = DM_Sans({subsets: ["latin"]});
@@ -68,7 +66,7 @@ export default async function RootLayout({children, params}: {
 }) {
     const global = await getGlobal(params.lang);
 
-    if (!global.data) return (<ErrorPage />);
+    if (!global.data) return (<ErrorPage/>);
     const navbar = global.data.navbar;
     const navbarLogoUrl = getStrapiMedia(
         navbar.logo.url

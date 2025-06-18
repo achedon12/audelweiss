@@ -1,31 +1,20 @@
-import {fetchAPI, } from "@/app/utils/fetch-api";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {getStrapiMedia} from '@/app/utils/api-helpers';
+import {getDataPage} from "@/api/page/get-data-page";
 
 const SellersPage = async ({params}: { params: { lang: string } }) => {
-    const getSellers = async (lang: string): Promise<any> => {
-        const token = process.env.STRAPI_API_TOKEN;
 
-        if (!token) throw new Error("The Strapi API Token environment variable is not set.");
-
-        const path = `/sellers-page`;
-        const options = {headers: {Authorization: `Bearer ${token}`}};
-
-        const urlParamsObject = {
-            populate: {
-                "articles" : {
-                    populate: {
-                        image: {fields: ["url"]},
-                    },
-                }
-            },
-            locale: lang,
-        }
-        return await fetchAPI(path, urlParamsObject, options);
-    }
-
-    const pageContent = await getSellers(params.lang);
+    const pageContent = await getDataPage('/sellers-page', {
+        populate: {
+            "articles": {
+                populate: {
+                    image: {fields: ["url"]},
+                },
+            }
+        },
+        locale: params.lang,
+    });
     const {title, subtitle, articles} = pageContent.data;
 
     return (
@@ -39,7 +28,8 @@ const SellersPage = async ({params}: { params: { lang: string } }) => {
                     {
                         articles.map((article: any) => (
                             <article key={article.id} className="my-4 flex flex-row gap-2">
-                                <img src={getStrapiMedia(article.image.url)} alt={article.title} className="w-1/4 h-auto object-cover shadow-lg" />
+                                <img src={getStrapiMedia(article.image.url)} alt={article.title}
+                                     className="w-1/4 h-auto object-cover shadow-lg"/>
                                 <div className="my-4 flex flex-col">
                                     <h2 className="text-2xl uppercase">{article.title}</h2>
                                     <span className="text-awgraylight">{article.place}</span>

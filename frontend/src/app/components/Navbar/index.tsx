@@ -119,16 +119,20 @@ export default function Navbar({links, logoUrl, logoText, iconLinks}: {
                     </ul>
                 </div>
 
-                <div className={`fixed inset-0 z-10 flex items-center justify-center bg-opacity-50 transition-opacity duration-300 ${mobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
-                    <div className={`fixed top-0 right-0 mt-16 mr-4 w-11/12 bg-white border-t border-t-awpink p-4 transform transition-transform ${mobileMenuOpen ? "translate-y-10" : "-translate-y-10"} shadow-lg`}>
+                <div
+                    className={`fixed inset-0 z-10 flex items-center justify-center bg-opacity-50 transition-opacity duration-300 ${mobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
+                    <div
+                        className={`fixed top-0 right-0 mt-16 mr-4 w-11/12 bg-white border-t border-t-awpink p-4 transform transition-transform ${mobileMenuOpen ? "translate-y-10" : "-translate-y-10"} shadow-lg`}>
                         <button className="absolute top-4 right-4 text-gray-500" onClick={closeMenu}>
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                 stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                      d="M6 18L18 6M6 6l12 12"/>
                             </svg>
                         </button>
                         <ul className="space-y-4">
                             {links.map((item: NavLink) => (
-                                <MobileNavLink key={item.id} {...item} closeMenu={closeMenu} />
+                                <MobileNavLink key={item.id} {...item} closeMenu={closeMenu}/>
                             ))}
                         </ul>
                     </div>

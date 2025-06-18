@@ -1,17 +1,13 @@
-import {fetchAPI} from '@/app/utils/fetch-api';
 import Creation from '@/app/views/creation';
 import type {Metadata} from 'next';
 import {getCreationBySlug, getCreationCommentBySlug} from "@/api/creation/creation-by-slug";
+import {getDataCollection} from "@/api/page/get-data-page";
 
 async function getMetaData(slug: string) {
-    const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
-    const path = `/creations`;
-    const urlParamsObject = {
+    const response = await getDataCollection('/creations', {
         filters: {slug},
         populate: {seo: {populate: '*'}},
-    };
-    const options = {headers: {Authorization: `Bearer ${token}`}};
-    const response = await fetchAPI(path, urlParamsObject, options);
+    });
     return response.data;
 }
 
@@ -39,15 +35,11 @@ export default async function CreationRoute({params}: { params: { slug: string }
 }
 
 export async function generateStaticParams() {
-    const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
-    const path = `/creations`;
-    const options = {headers: {Authorization: `Bearer ${token}`}};
-    const articlesResponse = await fetchAPI(
-        path,
+    const articlesResponse = await getDataCollection(
+        '/creations',
         {
             populate: ['creation_categories'],
-        },
-        options
+        }
     );
 
     return articlesResponse.data.map(

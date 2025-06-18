@@ -1,10 +1,10 @@
 "use client";
 import {useCallback, useEffect, useState} from "react";
 import Loader from "@/app/components/Common/Loader";
-import {fetchAPI} from "@/app/utils/fetch-api";
 import {getStrapiMedia} from "@/app/utils/api-helpers";
 import Link from "next/link";
 import {useCategoryFilter} from "./CategoryFilterContext";
+import {getDataCollection} from "@/api/page/get-data-page";
 
 const BlogPage = () => {
 
@@ -30,9 +30,7 @@ const BlogPage = () => {
     const fetchData = useCallback(async (start: number, limit: number) => {
         setIsLoading(true);
         try {
-            const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
-            const path = `/creations`;
-            const urlParamsObject = {
+            const responseData = await getDataCollection('/creations', {
                 sort: {createdAt: "desc"},
                 populate: {
                     cover: {fields: ["url"]},
@@ -42,9 +40,7 @@ const BlogPage = () => {
                     start: start,
                     limit: limit,
                 },
-            };
-            const options = {headers: {Authorization: `Bearer ${token}`}};
-            const responseData = await fetchAPI(path, urlParamsObject, options);
+            });
 
             if (start === 0) {
                 setData(responseData.data);

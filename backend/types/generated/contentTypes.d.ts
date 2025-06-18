@@ -1,4 +1,4 @@
-import type {Schema, Struct} from '@strapi/strapi';
+import type { Schema, Struct } from '@strapi/strapi';
 
 export interface AdminApiToken extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_api_tokens';
@@ -438,7 +438,8 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
       'api::article.article'
     >;
     publishedAt: Schema.Attribute.DateTime;
-    seo: Schema.Attribute.Component<'website.seo', false>;
+    seo: Schema.Attribute.Component<'website.seo', false> &
+      Schema.Attribute.Required;
     slug: Schema.Attribute.UID<'title'>;
     title: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
