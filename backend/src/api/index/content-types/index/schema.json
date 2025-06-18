@@ -15,6 +15,11 @@
       "type": "component",
       "repeatable": false,
       "component": "index.banner"
+    },
+    "IndexArticles": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.content-article"
     }
   }
 }

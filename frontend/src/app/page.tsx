@@ -2,6 +2,7 @@ import {getStrapiMedia} from "@/app/utils/api-helpers";
 import {fetchAPI} from "@/app/utils/fetch-api";
 import React from "react";
 import ErrorPage from "@/app/error/page";
+import AnimatedText from "@/app/components/AnimatedText/AnimatedText";
 
 async function getIndex(lang: string): Promise<any> {
     const token = process.env.STRAPI_API_TOKEN;
@@ -12,9 +13,7 @@ async function getIndex(lang: string): Promise<any> {
     const options = {headers: {Authorization: `Bearer ${token}`}};
 
     const urlParamsObject = {
-        populate: [
-            'banner',
-        ],
+        populate: {banner: {populate: '*'}},
         locale: lang,
     };
     return await fetchAPI(path, urlParamsObject, options);
@@ -25,9 +24,8 @@ export default async function Page({params}: {
     readonly params: { lang: string };
 }) {
     const index = await getIndex(params.lang);
-    console.log(index);
-
-    if (!index.data) return (<ErrorPage />);
+    const data = index.data;
+    if (!data) return (<ErrorPage />);
 
 
     const navbarLogoUrl = getStrapiMedia('/uploads/bg2-e1739024515127.png.webp');
@@ -40,7 +38,7 @@ export default async function Page({params}: {
     const img1 = getStrapiMedia('/uploads/0b0bc07c-1615-4152-b893-770a637929dc.webp');
     const img2 = getStrapiMedia('/uploads/bandeaufantaisie.jpg');
 
-
+    console.log("Index data:", data);
     return (
         <>
             <div className="relative w-full">
@@ -48,39 +46,20 @@ export default async function Page({params}: {
                 <section
                     className="absolute top-1/2 right-1/2 md:right-1/4 w-[80%] md:w-1/2 transform translate-x-1/2 -translate-y-1/2 text-left flex flex-col gap-2 text-black items-baseline">
                     <h1 className="md:text-6xl font-bold text-xl">
-                        Des créations <br/>
-                        <span className="text-awpink">uniques</span>
-                        <br/>
-                        au crochet
+                        {data.banner.title_beginPart} <br/>
+                        <AnimatedText texts={data.banner.title_coloredText} /><br/>
+                        {data.banner.title_endPart}
                     </h1>
-                    <p>
-                        Chaque pièce est soigneusement confectionnée à la main dans les Hautes-Alpes. Offrez-vous ou à
-                        vos proches un savoir-faire authentique, alliant douceur et originalité.
-                    </p>
-                    <a
-                        href="#"
-                        className="group relative inline-flex items-center overflow-hidden bg-awblack p-3 pr-0 hover:pr-3 text-awgraylight transition-all duration-300 hover:bg-awpink hover:text-black"
-                    >
-                        Découvrir la boutique
-                        <img
-                            src="/arrow-right.svg"
-                            alt="arrow"
-                            className="ml-2 h-4 w-4 transform opacity-0 translate-x-full transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
-                        />
+                    <p>{data.banner.secondTitle}</p>
+                    <a href={data.banner.buttonRedirecting.url} className="group relative inline-flex items-center overflow-hidden bg-awblack p-3 pr-0 hover:pr-3 text-awgraylight transition-all duration-300 hover:bg-awpink hover:text-black">
+                        {data.banner.buttonRedirecting.text}
+                        <img src="/arrow-right.svg" alt="arrow" className="ml-2 h-4 w-4 transform opacity-0 translate-x-full transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"/>
                     </a>
                 </section>
-                <div className="absolute right-1/2 md:right-1/4 transform translate-x-1/2 top-1/5 -translate-y-1/2">
+                <div className="absolute right-1/2 md:right-1/6 transform translate-x-1/2 top-1/5 -translate-y-1/2">
                     <div className="relative w-1/2 h-1/2">
-                        <img
-                            src={pubUrl}
-                            alt="publicité"
-                            className="w-full h-full object-cover animate-spin-slow"
-                        />
-                        <img
-                            src={pubLogo}
-                            alt="logo de la publicité"
-                            className="absolute inset-0 m-auto w-1/2"
-                        />
+                        <img src={pubUrl} alt="publicité" className="w-full h-full object-cover animate-spin-slow"/>
+                        <img src={pubLogo} alt="logo de la publicité" className="absolute inset-0 m-auto w-1/2"/>
                     </div>
                 </div>
             </div>
