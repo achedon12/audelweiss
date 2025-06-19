@@ -1,6 +1,6 @@
 "use client";
 import {FormEvent, useState} from "react";
-import {getCreationBySlug} from "@/api/creation/creation-by-slug";
+import {getCreationBySlug} from "@/app/utils/creation-by-slug";
 
 const CreationComment = ({slug}) => {
     const [name, setName] = useState('');

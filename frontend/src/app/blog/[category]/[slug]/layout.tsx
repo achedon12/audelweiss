@@ -1,6 +1,6 @@
 import {ReactNode} from "react";
 import Link from "next/link";
-import {getDataCollection} from "@/api/page/get-data-page";
+import {getDataCollection} from "@/app/utils/get-data-page";
 
 async function getArticleTitle(slug: string) {
     const response = await getDataCollection('/articles', {

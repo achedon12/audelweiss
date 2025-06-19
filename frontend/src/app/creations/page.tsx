@@ -4,7 +4,7 @@ import Loader from "@/components/Common/Loader";
 import {getStrapiMedia} from "@/app/utils/api-helpers";
 import Link from "next/link";
 import {useCategoryFilter} from "./CategoryFilterContext";
-import {getDataCollection} from "@/api/page/get-data-page";
+import {getDataCollection} from "@/app/utils/get-data-page";
 
 const BlogPage = () => {
 

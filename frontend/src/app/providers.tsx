@@ -1,6 +1,7 @@
 "use client";
 import React, {createContext, useContext, useEffect, useState} from "react";
 import {ThemeProvider} from "next-themes";
+import {useRouter} from "next/navigation";
 
 type User = {
     id: number;
@@ -31,6 +32,7 @@ export function useAuth() {
 export function AuthProvider({children}: { children: React.ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
     const [token, setToken] = useState<string | null>(null);
+    const router = useRouter();
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
@@ -95,6 +97,7 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
         setToken(null);
         localStorage.removeItem("user");
         localStorage.removeItem("token");
+        router.push("/profile");
     };
 
     return (

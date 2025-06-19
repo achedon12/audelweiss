@@ -1,7 +1,7 @@
 import Creation from '@/views/creation';
 import type {Metadata} from 'next';
-import {getCreationBySlug, getCreationCommentBySlug} from "@/api/creation/creation-by-slug";
-import {getDataCollection} from "@/api/page/get-data-page";
+import {getCreationBySlug, getCreationCommentBySlug} from "@/app/utils/creation-by-slug";
+import {getDataCollection} from "@/app/utils/get-data-page";
 
 async function getMetaData(slug: string) {
     const response = await getDataCollection('/creations', {
