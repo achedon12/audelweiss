@@ -1,13 +1,13 @@
 "use client";
-import { createContext, useContext, useEffect, useState } from 'react';
+import {createContext, useContext, useEffect, useState} from 'react';
 import {getUserFromLocalCookie} from "@/providers/auth";
 
 let userState: undefined;
 
-const User = createContext({ user: null, loading: false });
+const User = createContext({user: null, loading: false});
 
-export const UserProvider = ({ value, children }) => {
-    const { user } = value;
+export const UserProvider = ({value, children}) => {
+    const {user} = value;
 
     useEffect(() => {
         if (!userState && user) {
@@ -35,8 +35,18 @@ export const useFetchUser = () => {
         const resolveUser = async () => {
             const user = await getUserFromLocalCookie();
             if (isMounted) {
-                setUser({ user, loading: false });
+                setUser({user, loading: false});
             }
+            console.log('useFetchUser', user);
+            setUser({
+                user: {
+                    'name': 'John',
+                    'lastName': 'Doe',
+                    'email': 'john.doe@gmail.com',
+                    'username': 'johndoe',
+                    'address': []
+                }, loading: false
+            });
         };
         resolveUser();
 
