@@ -964,6 +964,113 @@ export interface ApiSellersPageSellersPage extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiUserAddressTypeUserAddressType
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'user_address_types';
+  info: {
+    displayName: 'userAddressType';
+    pluralName: 'user-address-types';
+    singularName: 'user-address-type';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-address-type.user-address-type'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiUserAdressUserAdress extends Struct.CollectionTypeSchema {
+  collectionName: 'user_adresses';
+  info: {
+    description: '';
+    displayName: 'userAddress';
+    pluralName: 'user-adresses';
+    singularName: 'user-adress';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    address: Schema.Attribute.String & Schema.Attribute.Required;
+    city: Schema.Attribute.String & Schema.Attribute.Required;
+    country: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::user-available-country.user-available-country'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email;
+    entrepriseName: Schema.Attribute.String;
+    firstname: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-adress.user-adress'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    user_address_type: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::user-address-type.user-address-type'
+    >;
+    zipcode: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ApiUserAvailableCountryUserAvailableCountry
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'user_available_countries';
+  info: {
+    displayName: 'userAvailableCountry';
+    pluralName: 'user-available-countries';
+    singularName: 'user-available-country';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-available-country.user-available-country'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -1491,6 +1598,9 @@ declare module '@strapi/strapi' {
       'api::index.index': ApiIndexIndex;
       'api::legals-mentions-page.legals-mentions-page': ApiLegalsMentionsPageLegalsMentionsPage;
       'api::sellers-page.sellers-page': ApiSellersPageSellersPage;
+      'api::user-address-type.user-address-type': ApiUserAddressTypeUserAddressType;
+      'api::user-adress.user-adress': ApiUserAdressUserAdress;
+      'api::user-available-country.user-available-country': ApiUserAvailableCountryUserAvailableCountry;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
