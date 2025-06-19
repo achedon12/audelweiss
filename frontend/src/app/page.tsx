@@ -6,7 +6,7 @@ import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import ProductSection from "@/components/ProductSection/ProductSection";
 import CategoriesSection from "@/components/CategoriesSection/CategoriesSection";
-import {getDataPage} from "@/api/page/get-data-page";
+import {getDataPage} from "@/app/utils/get-data-page";
 
 const images = {
     navbarLogo: getStrapiMedia('/uploads/bg2-e1739024515127.png.webp'),

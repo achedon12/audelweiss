@@ -1,4 +1,4 @@
-import {getDataPage} from "@/api/page/get-data-page";
+import {getDataPage} from "@/app/utils/get-data-page";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 

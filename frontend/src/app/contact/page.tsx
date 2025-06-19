@@ -2,7 +2,7 @@ import {getStrapiMedia} from "@/app/utils/api-helpers";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import ContactForm from "@/components/ContactForm/Index";
-import {getDataPage} from "@/api/page/get-data-page";
+import {getDataPage} from "@/app/utils/get-data-page";
 
 const ContactPage = async ({params}: { params: { lang: string } }) => {
     const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;

@@ -2,18 +2,24 @@
 
 @theme {
     --color-awblack: #303028;
+    --color-awcement: #F0F0EE;
     --color-awgray: #B5B1A8;
     --color-awgraylight: #D6D0C2;
     --color-awpastel: #FDF1EB;
     --color-awsalmon: #E8A499;
     --color-awpink: #FF6187;
     --color-aworange: #F6B99C;
-    --color-gray-200: oklch(0.928 0.006 264.531);
 }
 
 :root {
     --background: #ffffff;
     --foreground: #171717;
+}
+
+.required:after {
+    margin-left: 0.25rem;
+    content: "*";
+    color: red;
 }
 
 @theme inline {

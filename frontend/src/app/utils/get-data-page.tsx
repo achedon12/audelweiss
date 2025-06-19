@@ -4,14 +4,14 @@ const privateToken = process.env.STRAPI_API_TOKEN;
 const publicToken = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
 export interface UrlParamObject {
-    filters?: Record<string, any>;               // e.g. { title: { $contains: 'foo' } }
-    populate?: string | string[] | Record<string, any>; // e.g. '*', ['author','comments'], ou { author: { populate: '*' } }
-    locale?: string;                             // e.g. 'en', 'fr'
-    sort?: Record<string, 'asc' | 'desc'> | string[]; // e.g. { createdAt: 'desc' } ou ['createdAt:desc']
-    fields?: string[];                           // e.g. ['title','excerpt']
+    filters?: Record<string, any>;
+    populate?: string | string[] | Record<string, any>;
+    locale?: string;
+    sort?: Record<string, 'asc' | 'desc'> | string[];
+    fields?: string[];
     pagination?: { page?: number; pageSize?: number; start?: number; limit?: number };
 
-    [key: string]: any;                          // pour les paramètres complémentaires
+    [key: string]: any;
 }
 
 const makeOptions = (token: string) => {
