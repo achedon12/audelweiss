@@ -7,4 +7,4 @@ services:
     image: mailhog/mailhog
     ports:
       - "8023:8025"
-      - "1024:1025"
+      - "1024:1025",
