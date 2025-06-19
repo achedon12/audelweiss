@@ -47,7 +47,7 @@ export default function LoginOrRegisterForm() {
                 <div className="pl-8 py-16">
                     <label className="block mb-2 text-sm text-awblack required">Identifiant ou e-mail</label>
                     <input
-                        type="email"
+                        type="text"
                         className="w-full p-2 border border-awsalmon text-awblack"
                         value={loginEmail}
                         onChange={e => setLoginEmail(e.target.value)}
