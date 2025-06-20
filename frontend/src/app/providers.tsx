@@ -1,7 +1,9 @@
 "use client";
 import React, {createContext, useContext, useEffect, useState} from "react";
+import ReactDOMServer from "react-dom/server";
 import {ThemeProvider} from "next-themes";
 import {useRouter} from "next/navigation";
+import MailConfirmation from "@/templates/mailConfirmation";
 
 type User = {
     id: number;
@@ -63,12 +65,12 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
     };
 
     const register = async (email: string, username: string) => {
-        const strongPassword = Math.random().toString(36).slice(-8);
+        const password = Math.random().toString(36).slice(-8) + "!" + Math.random().toString(36).slice(-4);
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/auth/local/register`, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({email, strongPassword, username}),
+                body: JSON.stringify({email, password, username}),
             });
             if (!res.ok) return false;
             const data = await res.json();
@@ -77,18 +79,34 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
             localStorage.setItem("user", JSON.stringify(data.user));
             localStorage.setItem("token", data.jwt);
 
+            await sendConfirmationEmail(email, username, password, data.jwt);
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    const sendConfirmationEmail = async (email: string, username: string, password: string, jwt: string) => {
+        try {
+            const html = ReactDOMServer.renderToStaticMarkup(
+                <MailConfirmation
+                    username={username}
+                    password={password}
+                    accountLink={`${process.env.FRONTEND_URL}/profile`}
+                    cgvLink={`${process.env.FRONTEND_URL}/cgv`}
+                />
+            );
             await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/send-email`, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
                     to: email,
                     subject: "Welcome to Our Platform",
-                    text: `Hello ${username},\n\nYour account has been created successfully.\n\nUsername: ${username}\nPassword: ${strongPassword}\n\nPlease change your password after logging in for the first time.\n\nBest regards,\nThe Team`,
+                    html
                 }),
             });
-            return true;
-        } catch {
-            return false;
+        } catch (error) {
+            console.error("Failed to send confirmation email:", error);
         }
     }
 
@@ -102,7 +120,7 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
 
     return (
         <AuthContext.Provider value={{user, token, login, register, logout}}>
-            <ThemeProvider attribute="class" enableSystem={false} defaultTheme="dark">
+            <ThemeProvider attribute="class" enableSystem={false} defaultTheme="light">
                 {children}
             </ThemeProvider>
         </AuthContext.Provider>
