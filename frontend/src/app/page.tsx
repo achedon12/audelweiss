@@ -7,6 +7,7 @@ import ReactMarkdown from "react-markdown";
 import ProductSection from "@/components/ProductSection/ProductSection";
 import CategoriesSection from "@/components/CategoriesSection/CategoriesSection";
 import {getDataPage} from "@/app/utils/get-data-page";
+import BlogSection from "@/components/BlogSection/BlogSection";
 
 const images = {
     navbarLogo: getStrapiMedia('/uploads/bg2-e1739024515127.png.webp'),
@@ -143,6 +144,7 @@ export default async function Page({params}: { readonly params: { lang: string }
             creations: {populate: "*"},
             categories: {populate: "*"},
             AboutCreator: {populate: "*"},
+            articles: {populate: "*"},
         },
         locale: params.lang,
     });
@@ -159,6 +161,7 @@ export default async function Page({params}: { readonly params: { lang: string }
             {/* partie boutique quand elle sera faite */}
             {/* <ShopSection products={data.creations}/> */}
             <AboutCreatorSection about={data.AboutCreator}/>
+            <BlogSection title={data.BlogTitle} articles={data.articles}/>
         </>
     );
 }

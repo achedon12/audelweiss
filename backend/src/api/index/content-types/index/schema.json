@@ -38,6 +38,14 @@
       "type": "component",
       "repeatable": false,
       "component": "index.about-creator"
+    },
+    "BlogTitle": {
+      "type": "string"
+    },
+    "articles": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::article.article"
     }
   }
 }

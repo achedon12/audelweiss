@@ -884,7 +884,9 @@ export interface ApiIndexIndex extends Struct.SingleTypeSchema {
   };
   attributes: {
     AboutCreator: Schema.Attribute.Component<'index.about-creator', false>;
+    articles: Schema.Attribute.Relation<'oneToMany', 'api::article.article'>;
     banner: Schema.Attribute.Component<'index.banner', false>;
+    BlogTitle: Schema.Attribute.String;
     categories: Schema.Attribute.Relation<
       'oneToMany',
       'api::creation.creation'
