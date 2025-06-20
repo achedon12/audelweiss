@@ -11,11 +11,11 @@ export default function ProductSection({products}: { products: any[] }) {
     return (
         <div className="relative w-full">
             <section
-                className="w-full flex flex-col ml-auto mr-auto md:flex-row items-center md:justify-between md:w-[80%] p-16 md:pr-0 md:pl-0">
+                className="grid grid-cols-1 md:grid-cols-4 gap-4 p-8 md:p-16 w-full max-w-screen-3xl mx-auto">
                 {products.map((product, idx) => (
                     <article
                         key={product.id}
-                        className="relative flex flex-col gap-2 w-full md:w-1/4 overflow-hidden md:overflow-visible group"
+                        className="relative flex flex-col gap-2 text-left text-black w-full overflow-hidden group"
                     >
                         {product.cover?.url && (
                             <div
@@ -27,7 +27,7 @@ export default function ProductSection({products}: { products: any[] }) {
                                 <Image
                                     src={getStrapiMedia(product.cover.url)}
                                     alt={product.title}
-                                    className="object-cover w-full h-72 group-hover:scale-105 transition-transform duration-300"
+                                    className="object-cover w-full h-80 group-hover:scale-105 transition-transform duration-300"
                                     width={400}
                                     height={400}
                                 />

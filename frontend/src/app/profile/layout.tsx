@@ -48,8 +48,8 @@ export default function Layout({children}: { children: ReactNode }) {
     }
 
     const avatarUrl =
-        user.picture && user.picture.url
-            ? getStrapiMedia(user.picture.url)
+        user.avatar && user.avatar.url
+            ? getStrapiMedia(user.avatar.url)
             : "/defaultAvatar.png";
 
     return (

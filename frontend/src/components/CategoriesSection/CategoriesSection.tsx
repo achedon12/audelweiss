@@ -11,11 +11,14 @@ export default function CategoriesSection({categories: products, buttonRedirecti
     const uniqueCategories = React.useMemo(() => {
         const map = new Map();
         products.forEach((product) => {
-            product.creation_categories?.forEach((cat: any) => {
-                if (!map.has(cat.id)) {
-                    map.set(cat.id, {...cat, product});
-                }
-            });
+            const firstCat = product.creation_categories && product.creation_categories[0];
+            if (firstCat && !map.has(firstCat.id)) {
+                map.set(firstCat.id, {
+                    id: firstCat.id,
+                    name: firstCat.name,
+                    product: product
+                });
+            }
         });
         return Array.from(map.values());
     }, [products]);

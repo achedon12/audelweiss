@@ -27,6 +27,23 @@ export interface FormSelect extends Struct.ComponentSchema {
   };
 }
 
+export interface IndexAboutCreator extends Struct.ComponentSchema {
+  collectionName: 'components_index_about_creators';
+  info: {
+    displayName: 'AboutCreator';
+  };
+  attributes: {
+    buttonRedirecting: Schema.Attribute.Component<'shared.link', true>;
+    Description: Schema.Attribute.Text;
+    img1: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    img2: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    Title: Schema.Attribute.String;
+  };
+}
+
 export interface IndexBanner extends Struct.ComponentSchema {
   collectionName: 'components_index_banners';
   info: {
@@ -252,6 +269,7 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'form.option': FormOption;
       'form.select': FormSelect;
+      'index.about-creator': IndexAboutCreator;
       'index.banner': IndexBanner;
       'shared.content-article': SharedContentArticle;
       'shared.custom-title': SharedCustomTitle;

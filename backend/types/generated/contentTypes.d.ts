@@ -883,6 +883,7 @@ export interface ApiIndexIndex extends Struct.SingleTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    AboutCreator: Schema.Attribute.Component<'index.about-creator', false>;
     banner: Schema.Attribute.Component<'index.banner', false>;
     categories: Schema.Attribute.Relation<
       'oneToMany',
@@ -897,6 +898,7 @@ export interface ApiIndexIndex extends Struct.SingleTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::index.index'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    TransitionText: Schema.Attribute.RichText;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1526,9 +1528,9 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
+    avatar: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
