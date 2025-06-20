@@ -1,40 +1,43 @@
 {
   "collectionName": "components_index_about_creators",
   "info": {
-    "displayName": "AboutCreator"
+    "displayName": "AboutCreator",
+    "description": ""
   },
   "options": {},
   "attributes": {
-    "Title": {
+    "title": {
       "type": "string"
     },
-    "Description": {
-      "type": "text"
-    },
     "img1": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "img2": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
     "buttonRedirecting": {
       "type": "component",
-      "repeatable": true,
+      "repeatable": false,
       "component": "shared.link"
+    },
+    "description": {
+      "type": "richtext"
     }
   }
 }

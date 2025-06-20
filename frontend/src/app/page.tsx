@@ -76,13 +76,73 @@ function ArticleSection({articles}: { articles: any[] }) {
     );
 }
 
+function TransitionSection({text}: { text: string }) {
+    return (
+        <section
+            className="w-full flex flex-col items-center justify-center p-16 text-awblack text-3xl leading-relaxed">
+            <ReactMarkdown
+                components={{
+                    p: ({node, ...props}) => <p className="prose prose-invert" {...props} />
+                }}
+            >
+                {text}
+            </ReactMarkdown>
+        </section>
+    );
+}
+
+function AboutCreatorSection({about}: { about: any }) {
+    return (
+        <section className="w-full flex items-center justify-center py-16 px-40 text-awblack">
+            <div className="w-1/2 pr-8">
+                <h2 className="text-[3rem] font-bold mb-4 w-1/2">{about.title}</h2>
+                <ReactMarkdown
+                    components={{
+                        p: ({node, ...props}) => <p className="prose prose-invert leading-loose mt-2" {...props} />
+                    }}
+                >
+                    {about.description}
+                </ReactMarkdown>
+                <div className="mt-8">
+                    <a href={about.buttonRedirecting.url}
+                       className="inline-flex items-center px-4 py-2 bg-awsalmon text-awblack hover:bg-awblack hover:text-white transition-colors duration-300">
+                        {about.buttonRedirecting.text}
+                    </a>
+                </div>
+            </div>
+            <div className="w-1/2 h-auto relative">
+                {about.img1?.url && (
+                    <Image
+                        src={getStrapiMedia(about.img1.url)}
+                        alt={about.title}
+                        className="h-auto object-cover w-full"
+                        width={400}
+                        height={500}
+                    />
+                )}
+                {about.img2?.url && (
+                    <Image
+                        src={getStrapiMedia(about.img2.url)}
+                        alt={about.title}
+                        className="absolute -bottom-20 -right-20 h-[30rem] w-60 object-cover rounded-full shadow-lg border-4 border-white"
+                        width={160}
+                        height={288}
+                        style={{objectPosition: "center"}}
+                    />
+                )}
+            </div>
+        </section>
+    );
+}
+
 export default async function Page({params}: { readonly params: { lang: string } }) {
     const index = await getDataPage('/index', {
         populate: {
             banner: {populate: "*"},
             IndexArticles: {populate: "*"},
             creations: {populate: "*"},
-            categories: {populate: "*"}
+            categories: {populate: "*"},
+            AboutCreator: {populate: "*"},
         },
         locale: params.lang,
     });
@@ -95,6 +155,10 @@ export default async function Page({params}: { readonly params: { lang: string }
             <ArticleSection articles={data.IndexArticles}/>
             <ProductSection products={data.creations}/>
             <CategoriesSection categories={data.categories} buttonRedirecting={data.banner.buttonRedirecting}/>
+            <TransitionSection text={data.TransitionText}/>
+            {/* partie boutique quand elle sera faite */}
+            {/* <ShopSection products={data.creations}/> */}
+            <AboutCreatorSection about={data.AboutCreator}/>
         </>
     );
 }

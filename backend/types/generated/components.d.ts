@@ -30,17 +30,15 @@ export interface FormSelect extends Struct.ComponentSchema {
 export interface IndexAboutCreator extends Struct.ComponentSchema {
   collectionName: 'components_index_about_creators';
   info: {
+    description: '';
     displayName: 'AboutCreator';
   };
   attributes: {
-    buttonRedirecting: Schema.Attribute.Component<'shared.link', true>;
-    Description: Schema.Attribute.Text;
+    buttonRedirecting: Schema.Attribute.Component<'shared.link', false>;
+    description: Schema.Attribute.RichText;
     img1: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    img2: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    >;
-    Title: Schema.Attribute.String;
+    img2: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    title: Schema.Attribute.String;
   };
 }
 
