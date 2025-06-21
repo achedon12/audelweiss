@@ -18,7 +18,7 @@ export default function MailConfirmation({ username, password, accountLink, cgvL
             color: "#222",
             boxShadow: "0 2px 8px rgba(0,0,0,0.07)"
         }}>
-            <div style={{ marginBottom: 32, background: "#f8f2f1", padding: "2rem" }}>
+            <div style={{background: "#f8f2f1", padding: "2rem" }}>
                 <p style={{fontSize: "2rem", textAlign: "center"}}>Hello,</p>
                 <p>Merci d'avoir créé un compte sur Audelweiss.</p>
                 <p>Ton nom d'utilisateur est : <b>{username}</b>.</p>
@@ -41,7 +41,7 @@ export default function MailConfirmation({ username, password, accountLink, cgvL
                 </a>
                 </div>
             </div>
-            <div style={{ borderTop: "1px solid #eee", padding: "2rem", textAlign: "center", background: "2d1c1c" }}>
+            <div style={{ borderTop: "1px solid #eee", padding: "2rem", textAlign: "center", background: "#2d1c1c", color: "#fff" }}>
                 <p>Suis les actus sur Instagram !</p>
                 <a
                     href="https://instagram.com/audelweisscraft"

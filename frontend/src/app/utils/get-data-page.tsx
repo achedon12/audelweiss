@@ -1,43 +1,21 @@
 import {fetchAPI} from "@/app/utils/fetch-api";
 
-const privateToken = process.env.STRAPI_API_TOKEN;
-const publicToken = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
-
-export interface UrlParamObject {
-    filters?: Record<string, any>;
-    populate?: string | string[] | Record<string, any>;
-    locale?: string;
-    sort?: Record<string, 'asc' | 'desc'> | string[];
-    fields?: string[];
-    pagination?: { page?: number; pageSize?: number; start?: number; limit?: number };
-
-    [key: string]: any;
+export async function getDataPage(path: string, urlParamsObject = {}) {
+    return fetchAPI(path, {isPrivate: true, urlParamsObject});
 }
 
-const makeOptions = (token: string) => {
-    return {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    }
+export async function getDataCollection(path: string, urlParamsObject = {}) {
+    return fetchAPI(path, {isPrivate: false, urlParamsObject});
 }
 
-export async function getDataPage(path: string, urlParamsObject: UrlParamObject = {}): Promise<any> {
-    if (!privateToken) {
-        throw new Error("The Strapi API Token environment variable is not set.");
-    }
-
-    const options = makeOptions(privateToken);
-
-    return await fetchAPI(path, urlParamsObject, options);
+export async function create(path: string, body: any) {
+    return fetchAPI(path, {method: "POST", body, isPrivate: true});
 }
 
-export async function getDataCollection(path: string, urlParamsObject: UrlParamObject = {}): Promise<any> {
-    if (!publicToken) {
-        throw new Error("The Strapi Public API Token environment variable is not set.");
-    }
+export async function update(path: string, body: any) {
+    return fetchAPI(path, {method: "PUT", body, isPrivate: true});
+}
 
-    const options = makeOptions(publicToken);
-
-    return fetchAPI(path, urlParamsObject, options);
+export async function remove(path: string) {
+    return fetchAPI(path, {method: "DELETE", isPrivate: true});
 }

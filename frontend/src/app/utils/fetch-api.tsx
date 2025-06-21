@@ -1,30 +1,48 @@
 import qs from "qs";
 import {getStrapiURL} from "./api-helpers";
 
+const privateToken = process.env.STRAPI_API_TOKEN;
+const publicToken = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+
+type Method = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+
+interface FetchOptions {
+    method?: Method;
+    body?: any;
+    isPrivate?: boolean;
+    urlParamsObject?: Record<string, any>;
+}
+
 export async function fetchAPI(
     path: string,
-    urlParamsObject = {},
-    options = {}
+    {method = "GET", body, isPrivate = false, urlParamsObject = {}}: FetchOptions = {}
 ) {
+    const token = isPrivate ? privateToken : publicToken;
+    if (!token) throw new Error("Le token Strapi n'est pas défini.");
+
+    const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+    };
+
+    const queryString = qs.stringify(urlParamsObject);
+    const requestUrl = `${getStrapiURL(
+        `/api${path}${queryString ? `?${queryString}` : ""}`
+    )}`;
+
+    const options: RequestInit = {
+        method,
+        headers,
+        next: {revalidate: 60},
+    };
+
+    if (body) options.body = JSON.stringify(body);
+
     try {
-        const mergedOptions = {
-            next: {revalidate: 60},
-            headers: {
-                "Content-Type": "application/json",
-            },
-            ...options,
-        };
-
-        const queryString = qs.stringify(urlParamsObject);
-        const requestUrl = `${getStrapiURL(
-            `/api${path}${queryString ? `?${queryString}` : ""}`
-        )}`;
-
-        const response = await fetch(requestUrl, mergedOptions);
+        const response = await fetch(requestUrl, options);
         return await response.json();
-
     } catch (error) {
         console.error(error);
-        throw new Error(`Please check if your server is running and you set all the required tokens.`);
+        throw new Error("Erreur lors de la requête Strapi.");
     }
 }

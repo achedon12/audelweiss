@@ -4,10 +4,10 @@ import ErrorPage from "@/app/error/page";
 import AnimatedText from "@/components/AnimatedText/AnimatedText";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
-import ProductSection from "@/components/ProductSection/ProductSection";
-import CategoriesSection from "@/components/CategoriesSection/CategoriesSection";
+import ProductSection from "@/components/Section/ProductSection/ProductSection";
+import CategoriesSection from "@/components/Section/CategoriesSection/CategoriesSection";
 import {getDataPage} from "@/app/utils/get-data-page";
-import BlogSection from "@/components/BlogSection/BlogSection";
+import BlogSection from "@/components/Section/BlogSection/BlogSection";
 
 const images = {
     navbarLogo: getStrapiMedia('/uploads/bg2-e1739024515127.png.webp'),

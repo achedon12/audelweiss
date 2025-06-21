@@ -31,7 +31,7 @@ const CreationComment = ({slug}) => {
                         email,
                         website,
                         comment,
-                        creation: creation.data[0].id, // Assurez-vous que la création existe
+                        creation: creation.data[0].id,
                     },
                 }),
             });
