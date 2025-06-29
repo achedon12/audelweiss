@@ -17,7 +17,6 @@ const Page = () => {
         newPassword: '',
         confirmPassword: ''
     });
-    console.log("user", user);
 
     const handleChange = (e: { target: { name: any; value: any; }; }) => {
         const {name, value} = e.target;

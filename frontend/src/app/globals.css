@@ -16,6 +16,11 @@
     --foreground: #171717;
 }
 
+::selection {
+    background: var(--color-awpastel);
+    color: var(--color-awblack);
+}
+
 .required:after {
     margin-left: 0.25rem;
     content: "*";
