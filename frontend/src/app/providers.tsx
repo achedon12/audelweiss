@@ -9,6 +9,10 @@ type User = {
     id: number;
     username: string;
     email: string;
+    firstname?: string;
+    lastname?: string;
+    createdAt: string;
+    updatedAt: string;
 };
 
 type AuthContextType = {
@@ -17,6 +21,7 @@ type AuthContextType = {
     login: (identifier: string, password: string) => Promise<boolean>;
     register: (email: string, username: string) => Promise<boolean>;
     logout: () => void;
+    setUser?: (user: User | null) => void;
 };
 
 const AuthContext = createContext<AuthContextType>({
@@ -25,6 +30,7 @@ const AuthContext = createContext<AuthContextType>({
     login: async () => false,
     register: async () => false,
     logout: () => {},
+    setUser: () => {},
 });
 
 export function useAuth() {
@@ -119,7 +125,7 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
     };
 
     return (
-        <AuthContext.Provider value={{user, token, login, register, logout}}>
+        <AuthContext.Provider value={{user, token, login, register, logout, setUser}}>
             <ThemeProvider attribute="class" enableSystem={false} defaultTheme="light">
                 {children}
             </ThemeProvider>
