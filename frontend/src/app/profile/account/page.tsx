@@ -3,11 +3,12 @@
 import {useAuth} from "@/app/providers";
 import React, {useState} from "react";
 import FormInput from "@/components/FormInput/FormInput";
-import {get, update} from "@/app/utils/get-data-page";
+import {update} from "@/app/utils/get-data-page";
 import Swal from 'sweetalert2';
 
 const Page = () => {
     const {user, setUser} = useAuth();
+    console.log(user)
     const [formData, setFormData] = useState({
         username: user?.username || '',
         firstname: user?.firstname || '',
@@ -54,33 +55,34 @@ const Page = () => {
                 return;
             }
 
-            try {
-                const data = await get(`/users/${user?.id}`, {urlParamsObject: {populate: 'password'}});
-                if (data.password !== oldPassword) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Erreur',
-                        text: "L'ancien mot de passe est incorrect.",
-                        toast: true,
-                        position: 'top-end',
-                        timer: 3000,
-                        showConfirmButton: false
-                    });
-                    return;
-                }
-            } catch (error) {
-                console.error("Error fetching user data:", error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Erreur',
-                    text: "Une erreur s'est produite lors de la vérification de l'ancien mot de passe.",
-                    toast: true,
-                    position: 'top-end',
-                    timer: 3000,
-                    showConfirmButton: false
-                });
-                return;
-            }
+            // try {
+            //     const data = await get(`/users/${user?.id}`, {populate: "password"});
+            //     if (data.password !== oldPassword) {
+            //         Swal.fire({
+            //             icon: 'error',
+            //             title: 'Erreur',
+            //             text: "L'ancien mot de passe est incorrect.",
+            //             toast: true,
+            //             position: 'top-end',
+            //             timer: 3000,
+            //             showConfirmButton: false
+            //         });
+            //         return;
+            //     }
+            // } catch (error) {
+            //     console.error("Error fetching user data:", error);
+            //     Swal.fire({
+            //         icon: 'error',
+            //         title: 'Erreur',
+            //         text: "Une erreur s'est produite lors de la vérification de l'ancien mot de passe.",
+            //         toast: true,
+            //         position: 'top-end',
+            //         timer: 3000,
+            //         showConfirmButton: false
+            //     });
+            //     return;
+            // }
+            //Strapi block the password fetch, so we can't check the old password directly
         }
 
         try {
@@ -99,6 +101,11 @@ const Page = () => {
                     password: undefined
                 });
             }
+            localStorage.setItem("user", JSON.stringify({
+                ...user,
+                ...body,
+                password: undefined
+            }));
             Swal.fire({
                 icon: 'success',
                 title: 'Succès',

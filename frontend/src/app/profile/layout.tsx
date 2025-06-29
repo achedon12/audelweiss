@@ -1,8 +1,8 @@
 "use client";
-import React, {ReactNode} from "react";
+import React, {ReactNode, useEffect} from "react";
+import {usePathname, useRouter} from "next/navigation";
 import {getStrapiMedia} from "@/app/utils/api-helpers";
 import Link from "next/link";
-import {usePathname} from "next/navigation";
 import {useAuth} from "@/app/providers";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -78,8 +78,17 @@ function UserProfile({showSwal, avatarUrl}: { showSwal: () => void; avatarUrl: s
 
 export default function Layout({children}: { children: ReactNode }) {
     const {user, logout} = useAuth();
+    const router = useRouter();
 
-    const showSwal = () => {getDisconnectModal({logout});};
+    useEffect(() => {
+        if (!user) {
+            router.push("/profile");
+        }
+    }, [user, router]);
+
+    const showSwal = () => {
+        getDisconnectModal({logout});
+    };
 
     const avatarUrl = user && user.avatar && "url" in user.avatar
         ? getStrapiMedia(user.avatar.url)

@@ -1012,6 +1012,7 @@ export interface ApiUserAdressUserAdress extends Struct.CollectionTypeSchema {
   attributes: {
     address: Schema.Attribute.String & Schema.Attribute.Required;
     city: Schema.Attribute.String & Schema.Attribute.Required;
+    companyName: Schema.Attribute.String;
     country: Schema.Attribute.Relation<
       'oneToOne',
       'api::user-available-country.user-available-country'
@@ -1020,7 +1021,6 @@ export interface ApiUserAdressUserAdress extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     email: Schema.Attribute.Email;
-    entrepriseName: Schema.Attribute.String;
     firstname: Schema.Attribute.String & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<

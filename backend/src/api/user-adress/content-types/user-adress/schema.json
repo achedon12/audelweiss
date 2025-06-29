@@ -30,7 +30,7 @@
       "type": "string",
       "required": true
     },
-    "entrepriseName": {
+    "companyName": {
       "type": "string"
     },
     "country": {
