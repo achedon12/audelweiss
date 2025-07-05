@@ -1,29 +1,31 @@
 "use client";
-import {useSearchParams} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import React, {useEffect, useState} from "react";
 import {useAuth} from "@/app/providers";
 import FormInput from "@/components/FormInput/FormInput";
-import {create, get} from "@/app/utils/get-data-page";
+import {create, get, update} from "@/app/utils/get-data-page";
 import Swal from "sweetalert2";
 
 type Country = {
+    id: number;
     name: string;
     slug: string;
-}
+};
 
 const Page = () => {
     const {user} = useAuth();
+    const router = useRouter();
     const searchParams = useSearchParams();
     const type = searchParams.get("type");
     const typeId = searchParams.get("typeId");
-    const [userAvailableCountries, setUserAvailableCountries] = useState<Country[]>([]);
-    const [formData, setFormData] = useState({
+    const addressId = searchParams.get("addressId");
+    const [userAvailableCountries, setUserAvailableCountries] = useState<Country[]>([]);    const [formData, setFormData] = useState({
         firstname: "",
-        lastname: "",
+        name: "",
         companyName: "",
         country: "",
-        street: "",
-        zip: "",
+        address: "",
+        zipcode: "",
         city: "",
         email: user?.email || "",
     });
@@ -38,11 +40,34 @@ const Page = () => {
             }
         };
 
+        const fetchAddress = async () => {
+            if (addressId) {
+                try {
+                    const data = await get(`/user-adresses/${addressId}`, {populate: "*"});
+                    const addr = data.data;
+                    //TODO Jsp pourquoi mais on fetch pas l'adresse
+                    setFormData({
+                        firstname: addr.firstname || "",
+                        name: addr.name || "",
+                        companyName: addr.companyName || "",
+                        country: addr.country?.id ? String(addr.country.id) : "",
+                        address: addr.address || "",
+                        zipcode: addr.zipcode || "",
+                        city: addr.city || "",
+                        email: addr.email || user?.email || "",
+                    });
+                } catch (error) {
+                    console.error("Erreur lors du chargement de l'adresse:", error);
+                }
+            }
+        };
+
         fetchCountries();
-    }, []);
+        fetchAddress();
+    }, [addressId, user?.email]);
 
     const toOptions = (countries: Country[] = []) =>
-        countries.map((c) => ({label: c.name, key: c.slug}));
+        (countries ?? []).map((c) => ({ label: c.name, key: String(c.id) }));
 
     const handleChange = (e: { target: { name: any; value: any; }; }) => {
         const {name, value} = e.target;
@@ -52,36 +77,36 @@ const Page = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await create(`/user-adresses`, {
-                ...formData,
+            const payload = {
                 user: user?.id,
-                user_address_type: typeId,
-            });
-            // Swal.fire({
-            //     icon: 'success',
-            //     title: 'Adresse enregistrée',
-            //     text: "Votre adresse a été enregistrée avec succès.",
-            //     toast: true,
-            //     position: 'top-end',
-            //     timer: 3000,
-            //     showConfirmButton: false
-            // });
-            // setFormData({
-            //     firstname: "",
-            //     lastname: "",
-            //     companyName: "",
-            //     country: "",
-            //     street: "",
-            //     zip: "",
-            //     city: "",
-            //     email: user?.email || "",
-            // });
-            // window.location.href = `/profile/address`;
+                user_address_type: Number(typeId),
+                ...formData,
+                country: Number(formData.country)
+            };
+            let response;
+            if (addressId) {
+                response = await update(`/user-adresses/${addressId}`, {data: payload});
+            } else {
+                response = await create("/user-adresses", {data: payload});
+            }
+
+            if (response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Adresse enregistrée',
+                    text: 'Votre adresse a été enregistrée avec succès.',
+                    toast: true,
+                    position: 'top-end',
+                    timer: 3000,
+                    showConfirmButton: false
+                });
+                router.push("/profile/address");
+            }
         } catch {
             Swal.fire({
                 icon: 'error',
                 title: 'Erreur',
-                text: "Une erreur s'est produite lors de l'enregistrement de l'adresse.",
+                text: "Une erreur s&apos;est produite lors de l&apos;enregistrement de l&apos;adresse.",
                 toast: true,
                 position: 'top-end',
                 timer: 3000,
@@ -107,17 +132,17 @@ const Page = () => {
                 <FormInput
                     label="Nom"
                     type="text"
-                    value={formData.lastname}
+                    value={formData.name}
                     onChange={handleChange}
-                    name="lastname"
+                    name="name"
                     required
                 />
             </div>
             <FormInput
-                label="Nom de l'entreprise (facultatif)"
+                label="Nom de l&apos;entreprise (facultatif)"
                 type="text"
                 name="companyName"
-                placeholder="Nom de l'entreprise"
+                placeholder="Nom de l&apos;entreprise"
                 value={formData.companyName}
                 onChange={handleChange}
             />
@@ -134,18 +159,18 @@ const Page = () => {
             <FormInput
                 label="Adresse"
                 type="text"
-                name="street"
+                name="address"
                 placeholder="Adresse"
-                value={formData.street}
+                value={formData.address}
                 onChange={handleChange}
                 required
             />
             <FormInput
                 label="Code postal"
                 type="text"
-                name="zip"
+                name="zipcode"
                 placeholder="Code postal"
-                value={formData.zip}
+                value={formData.zipcode}
                 onChange={handleChange}
                 required
             />
@@ -167,8 +192,9 @@ const Page = () => {
                 onChange={handleChange}
                 required
             />
-            <button type="submit" className="bg-awpastel text-awblack cursor-pointer py-2 w-1/2 mt-4 hover:bg-awsalmon transition-colors duration-300">
-                Enregistrer l'adresse
+            <button type="submit"
+                    className="bg-awpastel text-awblack cursor-pointer py-2 w-1/2 mt-4 hover:bg-awsalmon transition-colors duration-300">
+                {addressId ? "Modifier l&apos;adresse" : "Enregistrer l&apos;adresse"}
             </button>
         </form>
     );

@@ -12,21 +12,27 @@ type AddressType = {
 }
 
 type Address = {
+    id: string;
     user: any;
     user_address_type: any;
-    lastname?: string;
-    firstname?: string;
-    street?: string;
-    zip?: string;
-    city?: string;
-    country?: string;
+    firstname: string,
+    name: string,
+    companyName: string,
+    country: any,
+    address: string,
+    zipcode: string,
+    city: string,
 } | null;
 
 const AddressComponent: React.FC<{ address: Address, type: AddressType }> = ({address, type}) => {
     const router = useRouter();
-    const handleAdd = () => {
+    const handleAction = () => {
         if (type) {
-            router.push(`/profile/address/form?type=${type.id}`);
+            if (address) {
+                router.push(`/profile/address/form?typeId=${type.id}&type=${type.name}&addressId=${Number(address.id) - 1}`);
+            } else {
+                router.push(`/profile/address/form?typeId=${type.id}&type=${type.name}`);
+            }
         }
     };
 
@@ -37,17 +43,23 @@ const AddressComponent: React.FC<{ address: Address, type: AddressType }> = ({ad
             </h3>
             <p
                 className={"my-4 text-right text-green-700 font-bold text-sm cursor-pointer underline"}
-                onClick={handleAdd}
+                onClick={handleAction}
             >
-                Ajouter {type?.name === "BILLING" ? "Adresse de facturation" : type?.name === "DELIVERY" ? "Adresse de livraison" : "Adresse"}
+                {address
+                    ? (type?.name === "BILLING" ? "Modifier l'adresse de facturation" : type?.name === "DELIVERY" ? "Modifier l'adresse de livraison" : "Modifier l'adresse")
+                    : (type?.name === "BILLING" ? "Ajouter une adresse de facturation" : type?.name === "DELIVERY" ? "Ajouter une adresse de livraison" : "Ajouter une adresse")
+                }
             </p>
             {address ? (
-                <div>
-                    <div>{address.street}</div>
+                <div className={"italic text-awblack flex flex-col gap-2 mt-4"}>
+                    {address.companyName && <div>{address.companyName}</div>}
                     <div>
-                        {address.zip} {address.city}
+                        {address.firstname} {address.name}
                     </div>
-                    <div>{address.country}</div>
+                    <div>{address.address}</div>
+                    <div>
+                        {address.zipcode} {address.city}
+                    </div>
                 </div>
             ) : (
                 <p className="text-sm italic text-awblack">
@@ -106,7 +118,7 @@ const Page = () => {
             </p>
             <div className="grid grid-cols-2 gap-10 mt-8">
                 {adressTypes.map((type) => {
-                    const address = userAddress?.find((addr) => addr.user_address_type?.id === type.id);
+                    const address = userAddress?.find((addr: { user_address_type: { id: string; }; }) => addr.user_address_type?.id === type.id);
                     return (
                         <AddressComponent key={type.id} address={address} type={type} />
                     );
