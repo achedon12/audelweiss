@@ -45,7 +45,6 @@ const Page = () => {
                 try {
                     const data = await get(`/user-adresses/${addressId}`, {populate: "*"});
                     const addr = data.data;
-                    //TODO Jsp pourquoi mais on fetch pas l'adresse
                     setFormData({
                         firstname: addr.firstname || "",
                         name: addr.name || "",
@@ -194,7 +193,7 @@ const Page = () => {
             />
             <button type="submit"
                     className="bg-awpastel text-awblack cursor-pointer py-2 w-1/2 mt-4 hover:bg-awsalmon transition-colors duration-300">
-                {addressId ? "Modifier l&apos;adresse" : "Enregistrer l&apos;adresse"}
+                {addressId ? "Modifier l'adresse" : "Enregistrer l'adresse"}
             </button>
         </form>
     );

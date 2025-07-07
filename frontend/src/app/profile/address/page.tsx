@@ -7,12 +7,14 @@ import {useRouter} from "next/navigation";
 
 type AddressType = {
     id: string;
+    documentId: string;
     name: string;
     slug: string;
 }
 
 type Address = {
     id: string;
+    documentId: string;
     user: any;
     user_address_type: any;
     firstname: string,
@@ -29,7 +31,7 @@ const AddressComponent: React.FC<{ address: Address, type: AddressType }> = ({ad
     const handleAction = () => {
         if (type) {
             if (address) {
-                router.push(`/profile/address/form?typeId=${type.id}&type=${type.name}&addressId=${Number(address.id) - 1}`);
+                router.push(`/profile/address/form?typeId=${type.id}&type=${type.name}&addressId=${address.documentId}`);
             } else {
                 router.push(`/profile/address/form?typeId=${type.id}&type=${type.name}`);
             }
