@@ -29,6 +29,7 @@ export default async function CreationRoute({params}: { params: { slug: string }
     const {slug} = await params;
 
     const data = await getCreationBySlug(slug);
+    console.log('data', data);
     const comments = await getCreationCommentBySlug(slug);
 
     if (data.data.length === 0) return <h2>Création non trouvée</h2>;

@@ -1,7 +1,6 @@
 import {fetchAPI} from "@/app/utils/fetch-api";
 
 export async function getCreationBySlug(slug: string) {
-    const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
     const path = `/creations`;
     const urlParamsObject = {
         filters: {slug},
@@ -10,16 +9,13 @@ export async function getCreationBySlug(slug: string) {
             creation_categories: {fields: ['name']},
         },
     };
-    const options = {headers: {Authorization: `Bearer ${token}`}};
-    return await fetchAPI(path, urlParamsObject, options);
+    return await fetchAPI(path, {urlParamsObject});
 }
 
 export async function getCreationCommentBySlug(slug: string) {
-    const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
     const path = `/creation-comments`;
     const urlParamsObject = {
         filters: {creation: {slug}, isPublish: true},
     };
-    const options = {headers: {Authorization: `Bearer ${token}`}};
-    return await fetchAPI(path, urlParamsObject, options);
+    return await fetchAPI(path, {urlParamsObject});
 }
