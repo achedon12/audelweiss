@@ -989,6 +989,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     long_description: Schema.Attribute.Text;
     name: Schema.Attribute.String;
+    note: Schema.Attribute.Integer;
     price: Schema.Attribute.Decimal;
     product_categories: Schema.Attribute.Relation<
       'manyToMany',
@@ -996,6 +997,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     >;
     publishedAt: Schema.Attribute.DateTime;
     short_description: Schema.Attribute.Text;
+    slug: Schema.Attribute.UID<'name'>;
     temperature: Schema.Attribute.Integer;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
