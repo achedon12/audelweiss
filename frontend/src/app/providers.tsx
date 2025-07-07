@@ -98,7 +98,7 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
                 <MailConfirmation
                     username={username}
                     password={password}
-                    accountLink={`${process.env.FRONTEND_URL}/profile`}
+                    accountLink={`${process.env.FRONTEND_URL}/my-account`}
                     cgvLink={`${process.env.FRONTEND_URL}/cgv`}
                 />
             );
@@ -121,7 +121,7 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
         setToken(null);
         localStorage.removeItem("user");
         localStorage.removeItem("token");
-        router.push("/profile");
+        router.push("/my-account");
     };
 
     return (

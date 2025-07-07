@@ -8,10 +8,10 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
 const navLinks = [
-    {label: "Liste des commandes", href: "/profile/orders"},
-    {label: "Fichiers à télécharger", href: "/profile/downloads"},
-    {label: "Mes adresses", href: "/profile/address"},
-    {label: "Mon compte", href: "/profile/account"},
+    {label: "Liste des commandes", href: "/my-account/orders"},
+    {label: "Fichiers à télécharger", href: "/my-account/downloads"},
+    {label: "Mes adresses", href: "/my-account/edit-address"},
+    {label: "Mon compte", href: "/my-account/edit-account"},
     {label: "Déconnexion"},
 ];
 
@@ -82,7 +82,7 @@ export default function Layout({children}: { children: ReactNode }) {
 
     useEffect(() => {
         if (!user) {
-            router.push("/profile");
+            router.push("/my-account");
         }
     }, [user, router]);
 

@@ -35,7 +35,7 @@ const RegisterForm = () => {
             }
 
             setToken(response);
-            router.push('/profile');
+            router.push('/my-account');
 
         } catch (error) {
             console.error("Erreur lors de l'inscription :", error);

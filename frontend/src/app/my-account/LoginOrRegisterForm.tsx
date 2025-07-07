@@ -19,7 +19,7 @@ export default function LoginOrRegisterForm() {
         setLoginError(null);
         const success = await login(loginEmail, password);
         if (success) {
-            router.push("/profile");
+            router.push("/my-account/edit-account");
         } else {
             setLoginError("Identifiants invalides.");
         }
@@ -31,7 +31,7 @@ export default function LoginOrRegisterForm() {
         const userName = registerEmail.split("@")[0];
         const success = await register(registerEmail, userName);
         if (success) {
-            router.push("/profile");
+            router.push("/my-account/edit-account");
         } else {
             setRegisterError("Erreur lors de l'inscription. Veuillez réessayer.");
         }

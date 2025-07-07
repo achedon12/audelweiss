@@ -31,9 +31,9 @@ const AddressComponent: React.FC<{ address: Address, type: AddressType }> = ({ad
     const handleAction = () => {
         if (type) {
             if (address) {
-                router.push(`/profile/address/form?typeId=${type.id}&type=${type.name}&addressId=${address.documentId}`);
+                router.push(`/my-account/edit-address/form?typeId=${type.id}&type=${type.name}&addressId=${address.documentId}`);
             } else {
-                router.push(`/profile/address/form?typeId=${type.id}&type=${type.name}`);
+                router.push(`/my-account/edit-address/form?typeId=${type.id}&type=${type.name}`);
             }
         }
     };

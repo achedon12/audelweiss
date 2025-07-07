@@ -99,7 +99,7 @@ const Page = () => {
                     timer: 3000,
                     showConfirmButton: false
                 });
-                router.push("/profile/address");
+                router.push("/my-account/edit-address");
             }
         } catch {
             Swal.fire({
