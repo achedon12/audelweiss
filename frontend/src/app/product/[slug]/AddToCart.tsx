@@ -4,6 +4,7 @@ import { useState } from "react";
 
 export default function AddToCart({ product }: { product: any }) {
     const [quantity, setQuantity] = useState(1);
+    const [added, setAdded] = useState(false);
 
     const handleAddToCart = () => {
         if (typeof window === "undefined") return;
@@ -13,10 +14,8 @@ export default function AddToCart({ product }: { product: any }) {
         const existingIndex = cart.findIndex((item: any) => item.id === product.id);
 
         if (existingIndex !== -1) {
-            // Le produit est déjà dans le panier → on met à jour la quantité
             cart[existingIndex].quantity += quantity;
         } else {
-            // Nouveau produit
             cart.push({
                 id: product.id,
                 name: product.name,
@@ -27,8 +26,18 @@ export default function AddToCart({ product }: { product: any }) {
         }
 
         localStorage.setItem("audelweissCart", JSON.stringify(cart));
-        alert("Produit ajouté au panier !");
+        setAdded(true);
     };
+
+    const handleMouseEnter = () => {
+        if (added) {
+            setAdded(false);
+        }
+    };
+
+    const buttonClass = `px-4 py-2 text-white cursor-pointer transition ${
+        added ? "bg-green-500 hover:bg-black" : "bg-pink-400 hover:bg-black"
+    }`;
 
     return (
         <div className="mt-4 flex items-center">
@@ -42,10 +51,11 @@ export default function AddToCart({ product }: { product: any }) {
             />
             <button
                 type="button"
-                className="bg-pink-400 text-white px-4 py-2 hover:bg-black cursor-pointer transition"
                 onClick={handleAddToCart}
+                onMouseEnter={handleMouseEnter}
+                className={buttonClass}
             >
-                Ajouter au panier
+                {added ? "Produit ajouté !" : "Ajouter au panier"}
             </button>
         </div>
     );

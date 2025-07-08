@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import { useRouter } from "next/navigation";
 export default function CartPage() {
     const [cartItems, setCartItems] = useState<any[]>([]);
+    const router = useRouter();
 
     useEffect(() => {
         const cart = localStorage.getItem("audelweissCart");
-        console.log(cart);
         if (cart) {
             setCartItems(JSON.parse(cart));
         }
@@ -21,7 +21,6 @@ export default function CartPage() {
                 <h1 className="pb-10 text-3xl font-semibold">Panier</h1>
 
                 <div className="flex items-start gap-10">
-                    {/* TABLEAU */}
                     <div>
                         <table className="table-auto text-left w-full max-w-[900px]">
                             <thead>
@@ -44,19 +43,22 @@ export default function CartPage() {
                                     <td className="p-4">
                                         <input
                                             type="number"
-                                            min={1}
+                                            min={0}
                                             value={item.quantity}
                                             onChange={(e) => {
                                                 const newQuantity = parseInt(e.target.value, 10);
-                                                if (isNaN(newQuantity) || newQuantity < 1) return;
+                                                if (isNaN(newQuantity) || newQuantity < 0) return;
 
                                                 const updatedItems = [...cartItems];
                                                 updatedItems[index].quantity = newQuantity;
                                                 setCartItems(updatedItems);
-                                                localStorage.setItem("audelweissCart", JSON.stringify(updatedItems));
+
+                                                const filteredForStorage = updatedItems.filter(item => item.quantity > 0);
+                                                localStorage.setItem("audelweissCart", JSON.stringify(filteredForStorage));
                                             }}
                                             className="w-16 border p-1 border-gray-400 pt-3 pb-3 text-center"
                                         />
+
                                     </td>
                                     <td className="p-4">{(item.price * item.quantity).toFixed(2)}€</td>
                                 </tr>
@@ -76,7 +78,6 @@ export default function CartPage() {
                         </div>
                     </div>
 
-                    {/* ASIDE */}
                     <aside className="bg-gray-200 p-10 w-[500px] flex flex-col items-center">
                         <h1 className="text-2xl font-semibold mb-10">TOTAUX</h1>
 
@@ -93,7 +94,10 @@ export default function CartPage() {
                             <p>{total.toFixed(2)}€</p>
                         </div>
 
-                        <button className="bg-black text-white px-6 py-3 hover:bg-pink-400 hover:cursor-pointer transition duration-200">
+                        <button
+                            onClick={() => router.push("/command")}
+                            className="bg-black text-white px-6 py-3 hover:bg-pink-400 hover:cursor-pointer transition duration-200"
+                        >
                             Procéder à la commande
                         </button>
                     </aside>
