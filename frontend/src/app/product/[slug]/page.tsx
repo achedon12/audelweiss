@@ -14,19 +14,22 @@ async function getProductBySlug(slug: string) {
     const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
     if (!token) throw new Error("Le token API n'est pas défini.");
 
-    const path = "/products?populate=*";
+    const path = "/products";
+
     const urlParamsObject = {
-        filters: { slug: slug },
+        filters: {
+            slug: {
+                $eq: slug,
+            },
+        },
         populate: ["cover", "product_categories"],
     };
-    const options = {
-        headers: { Authorization: `Bearer ${token}` },
-    };
 
-    const response = await fetchAPI(path, urlParamsObject, options);
-
+    const response = await fetchAPI(path, { urlParamsObject, method: "GET" });
+    console.log(response);
     return response.data.length > 0 ? response.data[0] : null;
 }
+
 
 
 export default async function ProductPage({ params }: Params) {
