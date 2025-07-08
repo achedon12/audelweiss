@@ -20,88 +20,99 @@ export default function CartPage() {
             <div className="ml-70 mr-70 pt-5">
                 <h1 className="pb-10 text-3xl font-semibold">Panier</h1>
 
-                <div className="flex items-start gap-10">
-                    <div>
-                        <table className="table-auto text-left w-full max-w-[900px]">
-                            <thead>
-                            <tr className="border-b border-gray-400 text-yellow-800">
-                                <th className="p-4">IMAGE</th>
-                                <th className="p-4">PRODUIT</th>
-                                <th className="p-4">PRIX</th>
-                                <th className="p-4">QUANTITÉ</th>
-                                <th className="p-4">TOTAL PRODUIT</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {cartItems.map((item, index) => (
-                                <tr key={index} className="border-b border-gray-400">
-                                    <td className="p-4">
-                                        <img src={item.image} alt={item.name} className="w-16 h-16 object-cover" />
-                                    </td>
-                                    <td className="p-4">{item.name}</td>
-                                    <td className="p-4">{item.price}€</td>
-                                    <td className="p-4">
-                                        <input
-                                            type="number"
-                                            min={0}
-                                            value={item.quantity}
-                                            onChange={(e) => {
-                                                const newQuantity = parseInt(e.target.value, 10);
-                                                if (isNaN(newQuantity) || newQuantity < 0) return;
-
-                                                const updatedItems = [...cartItems];
-                                                updatedItems[index].quantity = newQuantity;
-                                                setCartItems(updatedItems);
-
-                                                const filteredForStorage = updatedItems.filter(item => item.quantity > 0);
-                                                localStorage.setItem("audelweissCart", JSON.stringify(filteredForStorage));
-                                            }}
-                                            className="w-16 border p-1 border-gray-400 pt-3 pb-3 text-center"
-                                        />
-
-                                    </td>
-                                    <td className="p-4">{(item.price * item.quantity).toFixed(2)}€</td>
-                                </tr>
-                            ))}
-                            </tbody>
-                        </table>
-
+                {cartItems.length > 0 ? (
+                    <div className="flex items-start gap-10">
                         <div>
-                            <input
-                                type="text"
-                                placeholder="Code promo"
-                                className="border mt-5 p-2 w-[150px] border-gray-400"
-                            />
-                            <button className="p-2 pl-4 pr-4 ml-10 hover:bg-amber-100 transition cursor-pointer bg-gray-400">
-                                Valider
+                            <table className="table-auto text-left w-full max-w-[900px]">
+                                <thead>
+                                <tr className="border-b border-gray-400 text-yellow-800">
+                                    <th className="p-4">IMAGE</th>
+                                    <th className="p-4">PRODUIT</th>
+                                    <th className="p-4">PRIX</th>
+                                    <th className="p-4">QUANTITÉ</th>
+                                    <th className="p-4">TOTAL PRODUIT</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {cartItems.map((item, index) => (
+                                    <tr key={index} className="border-b border-gray-400">
+                                        <td className="p-4">
+                                            <img src={item.image} alt={item.name} className="w-16 h-16 object-cover" />
+                                        </td>
+                                        <td className="p-4">{item.name}</td>
+                                        <td className="p-4">{item.price}€</td>
+                                        <td className="p-4">
+                                            <input
+                                                type="number"
+                                                min={0}
+                                                value={item.quantity}
+                                                onChange={(e) => {
+                                                    const newQuantity = parseInt(e.target.value, 10);
+                                                    if (isNaN(newQuantity) || newQuantity < 0) return;
+
+                                                    const updatedItems = [...cartItems];
+                                                    updatedItems[index].quantity = newQuantity;
+                                                    setCartItems(updatedItems);
+
+                                                    const filteredForStorage = updatedItems.filter(item => item.quantity > 0);
+                                                    localStorage.setItem("audelweissCart", JSON.stringify(filteredForStorage));
+                                                }}
+                                                className="w-16 border p-1 border-gray-400 pt-3 pb-3 text-center"
+                                            />
+                                        </td>
+                                        <td className="p-4">{(item.price * item.quantity).toFixed(2)}€</td>
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </table>
+
+                            <div>
+                                <input
+                                    type="text"
+                                    placeholder="Code promo"
+                                    className="border mt-5 p-2 w-[150px] border-gray-400"
+                                />
+                                <button className="p-2 pl-4 pr-4 ml-10 hover:bg-amber-100 transition cursor-pointer bg-gray-400">
+                                    Valider
+                                </button>
+                            </div>
+                        </div>
+
+                        <aside className="bg-gray-200 p-10 w-[500px] flex flex-col items-center">
+                            <h1 className="text-2xl font-semibold mb-10">TOTAUX</h1>
+
+                            <div className="w-full flex justify-between border-b border-gray-400 mb-5 pb-5">
+                                <p>Sous-total</p>
+                                <p>{total.toFixed(2)}€</p>
+                            </div>
+                            <div className="w-full flex justify-between border-b border-gray-400 mb-5 pb-5">
+                                <p>Shipping</p>
+                                <p>Gratuit</p>
+                            </div>
+                            <div className="w-full flex justify-between mb-10">
+                                <p>Total</p>
+                                <p>{total.toFixed(2)}€</p>
+                            </div>
+
+                            <button
+                                onClick={() => router.push("/command")}
+                                className="bg-black text-white px-6 py-3 hover:bg-pink-400 hover:cursor-pointer transition duration-200"
+                            >
+                                Procéder à la commande
                             </button>
-                        </div>
+                        </aside>
                     </div>
-
-                    <aside className="bg-gray-200 p-10 w-[500px] flex flex-col items-center">
-                        <h1 className="text-2xl font-semibold mb-10">TOTAUX</h1>
-
-                        <div className="w-full flex justify-between border-b border-gray-400 mb-5 pb-5">
-                            <p>Sous-total</p>
-                            <p>{total.toFixed(2)}€</p>
-                        </div>
-                        <div className="w-full flex justify-between border-b border-gray-400 mb-5 pb-5">
-                            <p>Shipping</p>
-                            <p>Gratuit</p>
-                        </div>
-                        <div className="w-full flex justify-between mb-10">
-                            <p>Total</p>
-                            <p>{total.toFixed(2)}€</p>
-                        </div>
-
+                ) : (
+                    <div className="flex flex-col items-center">
+                        <p className="text-gray-600 mt-10 mb-10">Oh bah alors ! y'a rien ici 😯</p>
                         <button
-                            onClick={() => router.push("/command")}
-                            className="bg-black text-white px-6 py-3 hover:bg-pink-400 hover:cursor-pointer transition duration-200"
+                            onClick={() => router.push("/shop")}
+                            className="bg-black text-white mb-10 px-6 py-3 hover:bg-pink-400 hover:cursor-pointer transition duration-200"
                         >
-                            Procéder à la commande
+                            Retourner sur la boutique
                         </button>
-                    </aside>
-                </div>
+                    </div>
+                )}
             </div>
             <div className="bg-gray-100 flex pl-80 pr-80 justify-between pb-10 pt-10">
                 <div className="border-r border-gray-400 p-10">
