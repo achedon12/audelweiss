@@ -8,7 +8,6 @@ import Swal from 'sweetalert2';
 
 const Page = () => {
     const {user, setUser} = useAuth();
-    console.log(user)
     const [formData, setFormData] = useState({
         username: user?.username || '',
         firstname: user?.firstname || '',
