@@ -161,7 +161,7 @@ export default async function Page({params}: { readonly params: { lang: string }
             <TransitionSection text={data.TransitionText}/>
             {/* partie boutique quand elle sera faite */}
             {/* <ShopSection products={data.creations}/> */}
-            <AboutCreatorSection about={data.AboutCreator}/>
+            {/*<AboutCreatorSection about={data.AboutCreator}/>*/}
             <BlogSection title={data.BlogTitle} articles={data.articles}/>
         </>
     );

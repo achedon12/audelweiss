@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import {fetchAPI} from "@/app/utils/fetch-api";
 import {getStrapiMedia} from "@/app/utils/api-helpers";
+import AddToCart from "@/app/product/[slug]/AddToCart";
 
 type Params = {
     params: {
@@ -30,7 +31,7 @@ async function getProductBySlug(slug: string) {
 
 export default async function ProductPage({ params }: Params) {
     const product = await getProductBySlug(params.slug);
-    console.log(product);
+
     if (!product) {
         notFound();
     }
@@ -57,16 +58,16 @@ export default async function ProductPage({ params }: Params) {
 
             <div className="ml-80 mt-20 mr-80 pb-20">
                 <div className="flex pb-20">
-                    <img
-                        src={getStrapiMedia(product.cover?.url)}
-                        alt={product.name}
-                        className="mr-20"
-                        style={{
-                            width: "60vh",
-                            height: "60vh",
-                            objectFit: "cover",
-                        }}
-                    />
+                    {/*<img*/}
+                    {/*    src={getStrapiMedia(product.cover?.url)}*/}
+                    {/*    alt={product.name}*/}
+                    {/*    className="mr-20"*/}
+                    {/*    style={{*/}
+                    {/*        width: "60vh",*/}
+                    {/*        height: "60vh",*/}
+                    {/*        objectFit: "cover",*/}
+                    {/*    }}*/}
+                    {/*/>*/}
 
                     <div>
                         <h2 className="text-4xl mb-2">{product.name}</h2>
@@ -98,21 +99,7 @@ export default async function ProductPage({ params }: Params) {
                         </p>
                         <h2 className="text-3xl text-pink-400 mt-6">{product.price} €</h2>
 
-                        <div className="mt-4 flex items-center">
-                            <input
-                                type="number"
-                                min={1}
-                                max={100}
-                                defaultValue={1}
-                                className="w-17 pr-4 px-3 py-2 border-none bg-gray-300 appearance-none"
-                            />
-                            <button
-                                type="button"
-                                className="bg-pink-400 text-white px-4 py-2 hover:bg-black cursor-pointer transition"
-                            >
-                                Ajouter au panier
-                            </button>
-                        </div>
+                        <AddToCart product={product} />
 
                     </div>
                 </div>
