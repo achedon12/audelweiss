@@ -3,7 +3,7 @@ import {useCallback, useEffect, useState} from "react";
 import Loader from "@/components/Common/Loader";
 import Blog from "@/views/blog-list";
 import PageHeader from "@/components/PageHeader";
-import {getDataCollection} from "@/api/page/get-data-page";
+import {getDataCollection} from "@/app/utils/get-data-page";
 
 const BlogPage = () => {
     interface Meta {

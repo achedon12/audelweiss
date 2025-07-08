@@ -1,0 +1,57 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_adresses",
+  "info": {
+    "singularName": "user-adress",
+    "pluralName": "user-adresses",
+    "displayName": "userAddress",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "user_addresses"
+    },
+    "user_address_type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::user-address-type.user-address-type"
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "firstname": {
+      "type": "string",
+      "required": true
+    },
+    "companyName": {
+      "type": "string"
+    },
+    "country": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::user-available-country.user-available-country"
+    },
+    "address": {
+      "type": "string",
+      "required": true
+    },
+    "zipcode": {
+      "type": "string",
+      "required": true
+    },
+    "city": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email"
+    }
+  }
+}

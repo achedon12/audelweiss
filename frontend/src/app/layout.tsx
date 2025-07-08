@@ -2,25 +2,20 @@ import "./globals.css";
 import {DM_Sans} from "next/font/google";
 import {Providers} from "@/app/providers";
 import Index from "@/components/ScrollToTop";
-import {fetchAPI} from "@/app/utils/fetch-api";
 import Navbar from "@/components/Navbar";
 import React from "react";
 import ErrorPage from "@/app/error/page";
 import {getStrapiMedia} from "@/app/utils/api-helpers";
 import Footer from "@/components/Footer";
-import {UserProvider} from "@/providers/AuthContext";
+import {getDataPage} from "@/app/utils/get-data-page";
 
 const font = DM_Sans({subsets: ["latin"]});
 
-async function getGlobal(lang: string): Promise<any> {
-    const token = process.env.STRAPI_API_TOKEN;
-
-    if (!token) throw new Error("The Strapi API Token environment variable is not set.");
-
-    const path = `/global`;
-    const options = {headers: {Authorization: `Bearer ${token}`}};
-
-    const urlParamsObject = {
+export default async function RootLayout({children, params}: {
+    readonly children: React.ReactNode;
+    readonly params: { lang: string };
+}) {
+    const global = await getDataPage('/global', {
         populate: [
             "navbar.logo",
             "navbar.navLink",
@@ -35,47 +30,15 @@ async function getGlobal(lang: string): Promise<any> {
             "footer.socialMedias",
             "footer.socialMedias.icon",
         ],
-        locale: lang,
-    };
-    return await fetchAPI(path, urlParamsObject, options);
-}
-
-//TODO: vérifier si utile, les données meta sont chargées en double avec
-/*
-export async function generateMetadata({ params } : { params: {lang: string}}): Promise<Metadata> {
-    const global = await getGlobal(params.lang);
-
-    if (!global.data) return FALLBACK_SEO;
-
-    const { siteName, siteDescription, favicon } = global.data;
-
-    console.log(favicon);
-
-    return {
-        title: siteName,
-        description: siteDescription,
-        icons: {
-            icon: [new URL(favicon, getStrapiURL(favicon.url))],
-        },
-    };
-}
-*/
-
-export default async function RootLayout({children, params}: {
-    readonly children: React.ReactNode;
-    readonly params: { lang: string };
-}) {
-    const global = await getGlobal(params.lang);
+        locale: params.lang,
+    });
 
     if (!global.data) return (<ErrorPage/>);
     const navbar = global.data.navbar;
-    const navbarLogoUrl = getStrapiMedia(
-        navbar.logo.url
-    );
-    const footerLogoUrl = getStrapiMedia(
-        global.data.footer.logo.url
-    );
+    const navbarLogoUrl = getStrapiMedia(navbar.logo.url);
+    const footerLogoUrl = getStrapiMedia(global.data.footer.logo.url);
     const faviconUrl = getStrapiMedia(global.data.favicon.url);
+
     return (
         <html suppressHydrationWarning lang="en">
         <head>
@@ -92,7 +55,7 @@ export default async function RootLayout({children, params}: {
                 iconLinks={navbar.iconLink}
             />
 
-            <main className="bg-white min-h-screen text-black">
+            <main className="bg-white text-black">
                 {children}
             </main>
 

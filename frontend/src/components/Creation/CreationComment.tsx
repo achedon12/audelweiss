@@ -1,6 +1,6 @@
 "use client";
 import {FormEvent, useState} from "react";
-import {getCreationBySlug} from "@/api/creation/creation-by-slug";
+import {getCreationBySlug} from "@/app/utils/creation-by-slug";
 
 const CreationComment = ({slug}) => {
     const [name, setName] = useState('');
@@ -31,7 +31,7 @@ const CreationComment = ({slug}) => {
                         email,
                         website,
                         comment,
-                        creation: creation.data[0].id, // Assurez-vous que la création existe
+                        creation: creation.data[0].id,
                     },
                 }),
             });

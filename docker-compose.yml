@@ -1,66 +1,9 @@
 version: '3.8'
 
 services:
-
-  strapi:
-    container_name: strapi
-    build: backend
-    image: strapi:latest
-    env_file: backend/.env
-    environment:
-      DATABASE_CLIENT: mysql
-      DATABASE_HOST: strapiDB
-      DATABASE_PORT: 3306
-      DATABASE_NAME: audelweiss
-      DATABASE_USERNAME: root
-      DATABASE_PASSWORD: root
-      JWT_SECRET:
-      ADMIN_JWT_SECRET: gwU7oC0TDrAzWwVlH4Hp3A==
-      APP_KEYS: l+dMjaYDsfUqk8q+/bzfhQ==,4r576C09BcLwwTWGxu9xtg==,Ix7OY5xRD6/LGDgQuFH2zA==,wcmYm9UciHxYXe8XLzuo+g==
-    volumes:
-      - ./backend/config:/opt/app/config
-      - ./backend/src:/opt/app/src
-      - ./backend/package.json:/opt/package.json
-      - ./backend/yarn.lock:/opt/yarn.lock
-      - ./backend/.env:/opt/app/.env
-      - ./backend/public/uploads:/opt/app/public/uploads
-    ports:
-      - "1337:1337"
-    networks:
-      - strapi
-    depends_on:
-      - strapiDB
-
-  strapiDB:
-    container_name: strapiDB
-    env_file: backend/.env
-    image: mysql:9.2.0
-    environment:
-      MYSQL_USER: aw-user
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_PASSWORD: aw-password
-      MYSQL_DATABASE: audelweiss
-    volumes:
-      - ./backend/strapi-data:/var/lib/mysql
-      #- ./data:/var/lib/mysql # if you want to use a bind folder
-    ports:
-      - "3305:3306"
-    networks:
-      - strapi
-
   mailer:
     container_name: mailer
     image: mailhog/mailhog
     ports:
       - "8023:8025"
       - "1024:1025"
-    networks:
-      - strapi
-
-volumes:
-  strapi-data:
-
-networks:
-  strapi:
-    name: Strapi
-    driver: bridge

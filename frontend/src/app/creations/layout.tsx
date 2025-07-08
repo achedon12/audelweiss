@@ -2,7 +2,7 @@
 import {ReactNode, useEffect, useState} from "react";
 import {usePathname, useSearchParams} from "next/navigation";
 import {CategoryFilterProvider, useCategoryFilter} from "./CategoryFilterContext";
-import {getDataCollection} from "@/api/page/get-data-page";
+import {getDataCollection} from "@/app/utils/get-data-page";
 
 const CategoryButtons = ({categories}: { categories: any[] }) => {
     const {selectedCategory, setSelectedCategory} = useCategoryFilter();

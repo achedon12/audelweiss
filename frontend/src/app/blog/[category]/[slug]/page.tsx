@@ -1,6 +1,6 @@
 import Post from '@/views/post';
 import type {Metadata} from 'next';
-import {getDataCollection} from "@/api/page/get-data-page";
+import {getDataCollection} from "@/app/utils/get-data-page";
 
 async function getPostBySlug(slug: string) {
     return await getDataCollection('/articles', {

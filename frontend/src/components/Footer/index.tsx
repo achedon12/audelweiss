@@ -78,7 +78,7 @@ export default function Footer({
     }, []);
 
     return (
-        <footer className="bg-awblack p-2 mt-10">
+        <footer className="bg-awblack p-2">
             <section
                 className={`flex flex-col ${isLargeScreen ? "md:flex-row" : "flex-col"} gap-2 items-baseline justify-between mx-auto pt-10 w-[80%]`}>
                 {isLargeScreen ? (

@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_available_countries",
+  "info": {
+    "singularName": "user-available-country",
+    "pluralName": "user-available-countries",
+    "displayName": "userAvailableCountry"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    }
+  }
+}

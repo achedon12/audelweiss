@@ -28,10 +28,6 @@ interface MobileNavLink extends NavLink {
     closeMenu: () => void;
 }
 
-interface MobileIconLink extends IconLink {
-    closeMenu: () => void;
-}
-
 function NavLink({url, text}: NavLink) {
     const path = usePathname();
 

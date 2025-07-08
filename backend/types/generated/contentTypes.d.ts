@@ -883,7 +883,10 @@ export interface ApiIndexIndex extends Struct.SingleTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    AboutCreator: Schema.Attribute.Component<'index.about-creator', false>;
+    articles: Schema.Attribute.Relation<'oneToMany', 'api::article.article'>;
     banner: Schema.Attribute.Component<'index.banner', false>;
+    BlogTitle: Schema.Attribute.String;
     categories: Schema.Attribute.Relation<
       'oneToMany',
       'api::creation.creation'
@@ -897,6 +900,7 @@ export interface ApiIndexIndex extends Struct.SingleTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::index.index'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    TransitionText: Schema.Attribute.RichText;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1032,6 +1036,113 @@ export interface ApiSellersPageSellersPage extends Struct.SingleTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     subtitle: Schema.Attribute.Text;
     title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiUserAddressTypeUserAddressType
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'user_address_types';
+  info: {
+    displayName: 'userAddressType';
+    pluralName: 'user-address-types';
+    singularName: 'user-address-type';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-address-type.user-address-type'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiUserAdressUserAdress extends Struct.CollectionTypeSchema {
+  collectionName: 'user_adresses';
+  info: {
+    description: '';
+    displayName: 'userAddress';
+    pluralName: 'user-adresses';
+    singularName: 'user-adress';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    address: Schema.Attribute.String & Schema.Attribute.Required;
+    city: Schema.Attribute.String & Schema.Attribute.Required;
+    companyName: Schema.Attribute.String;
+    country: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::user-available-country.user-available-country'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email;
+    firstname: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-adress.user-adress'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    user_address_type: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::user-address-type.user-address-type'
+    >;
+    zipcode: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ApiUserAvailableCountryUserAvailableCountry
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'user_available_countries';
+  info: {
+    displayName: 'userAvailableCountry';
+    pluralName: 'user-available-countries';
+    singularName: 'user-available-country';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-available-country.user-available-country'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1493,9 +1604,9 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
+    avatar: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
@@ -1507,6 +1618,8 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    firstname: Schema.Attribute.String;
+    lastname: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1528,6 +1641,10 @@ export interface PluginUsersPermissionsUser
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    user_addresses: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-adress.user-adress'
+    >;
     username: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique &
@@ -1567,6 +1684,9 @@ declare module '@strapi/strapi' {
       'api::product-category.product-category': ApiProductCategoryProductCategory;
       'api::product.product': ApiProductProduct;
       'api::sellers-page.sellers-page': ApiSellersPageSellersPage;
+      'api::user-address-type.user-address-type': ApiUserAddressTypeUserAddressType;
+      'api::user-adress.user-adress': ApiUserAdressUserAdress;
+      'api::user-available-country.user-available-country': ApiUserAvailableCountryUserAvailableCountry;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
