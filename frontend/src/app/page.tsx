@@ -1,4 +1,5 @@
 import {getStrapiMedia} from "@/app/utils/api-helpers";
+import {fetchAPI} from "@/app/utils/fetch-api";
 import React from "react";
 import ErrorPage from "@/app/error/page";
 import AnimatedText from "@/components/AnimatedText/AnimatedText";
