@@ -1,9 +1,11 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import jsPDF from "jspdf";
-import { getStrapiMedia } from "@/app/utils/api-helpers";
 
 export default function CommandPage() {
+    const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+    if (!token) throw new Error("Le token API n'est pas défini.");
+
     const [formData, setFormData] = useState({
         nom: "",
         prenom: "",
@@ -17,16 +19,31 @@ export default function CommandPage() {
     });
 
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const docRef = useRef(null); // Pour stocker le PDF généré
+    const docRef = useRef(null);
+
+    useEffect(() => {
+        const user = localStorage.getItem("user");
+        if (user) {
+            try {
+                const parsedUser = JSON.parse(user);
+                setFormData({
+                    nom: parsedUser.lastname || "",
+                    prenom: parsedUser.firstname || "",
+                    adresse: parsedUser.adresse || "",
+                });
+            } catch (error) {
+                console.error("Erreur parsing user :", error);
+            }
+        }
+    }, []);
 
     const handleChange = (field) => (e) => {
         setFormData({ ...formData, [field]: e.target.value });
         setErrors({ ...errors, [field]: false });
     };
 
-    const generatePDF = () => {
+    const generatePDFBlob = () => {
         const cart = JSON.parse(localStorage.getItem("audelweissCart") || "[]");
-
         const doc = new jsPDF();
         doc.setFontSize(18);
         doc.text("Facture", 105, 20, null, null, "center");
@@ -37,7 +54,6 @@ export default function CommandPage() {
         doc.text(`Adresse : ${formData.adresse}`, 20, 60);
 
         doc.text("Panier :", 20, 80);
-
         let y = 90;
         let total = 0;
 
@@ -49,11 +65,15 @@ export default function CommandPage() {
         });
 
         doc.text(`Total : ${total.toFixed(2)} €`, 25, y + 10);
+        const arrayBuffer = doc.output("arraybuffer");
+        const pdfBlob = new Blob([arrayBuffer], { type: "application/pdf" });
+        const file = new File([pdfBlob], "facture.pdf", { type: "application/pdf" });
+        docRef.current = doc;
+        return file;
 
-        docRef.current = doc; // Stocke le PDF généré
     };
 
-    const handleValidate = () => {
+    const handleValidate = async () => {
         const newErrors = {
             nom: formData.nom.trim() === "",
             prenom: formData.prenom.trim() === "",
@@ -61,13 +81,75 @@ export default function CommandPage() {
         };
 
         setErrors(newErrors);
+        const hasError = Object.values(newErrors).some(Boolean);
+        if (hasError) return;
 
-        const hasError = Object.values(newErrors).some((err) => err);
-        if (!hasError) {
-            generatePDF();
-            localStorage.removeItem("audelweissCart"); // Vide le panier
-            setIsSubmitted(true); // Cache le formulaire, affiche la suite
+        const user = localStorage.getItem("user");
+        if (!user) {
+            console.error("Utilisateur non connecté");
+            return;
         }
+
+        const parsedUser = JSON.parse(user);
+        const userId = parsedUser?.id;
+        if (!userId) {
+            console.error("ID utilisateur introuvable dans localStorage");
+            return;
+        }
+
+        const pdfFile = generatePDFBlob();
+        const testUrl = URL.createObjectURL(pdfFile);
+        window.open(testUrl);
+
+        const formUpload = new FormData();
+        formUpload.append("files", pdfFile); // plus besoin de nommer ici, c'est déjà un File
+
+
+        const uploadRes = await fetch("http://localhost:1337/api/upload", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            body: formUpload,
+        });
+
+
+        const uploadData = await uploadRes.json();
+
+        console.log("UploadData", uploadData);
+
+        const fileId = uploadData[0]?.id;
+
+        if (!fileId) {
+            console.error("Erreur lors de l'upload du fichier");
+            return;
+        }
+
+        const hashUID = crypto.randomUUID();
+
+        // Création de la receipt avec liaison au fichier ET à l’utilisateur
+        const receiptRes = await fetch("http://localhost:1337/api/receipts", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                data: {
+                    hash: hashUID,
+                    file: fileId,
+                    user: userId, // 🔗 Liaison à l’utilisateur ici
+                },
+            }),
+        });
+
+        if (!receiptRes.ok) {
+            console.error("Erreur lors de la création de la receipt");
+            return;
+        }
+
+        localStorage.removeItem("audelweissCart");
+        setIsSubmitted(true);
     };
 
     const downloadReceipt = () => {
@@ -80,7 +162,7 @@ export default function CommandPage() {
         <div>
             {!isSubmitted ? (
                 <div className="flex flex-col items-center">
-                    <h1 className="pb-10 text-3xl font-semibold">Valider vos informations</h1>
+                    <h1 className="pb-10 text-3xl font-semibold">Confirmer vos informations</h1>
                     <div className="space-x-13">
                         <input
                             className={`border p-2 rounded ${

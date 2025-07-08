@@ -11,7 +11,7 @@ async function getProducts() {
     const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
     if (!token) throw new Error("Le token API n'est pas défini.");
 
-    const path = "/products";
+    const path = "/products?populate=*";
     const urlParamsObject = {
         populate: ["cover", "product_categories"],
     };

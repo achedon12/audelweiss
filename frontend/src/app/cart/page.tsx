@@ -2,16 +2,48 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import {getStrapiMedia} from "@/app/utils/api-helpers";
+
 export default function CartPage() {
     const [cartItems, setCartItems] = useState<any[]>([]);
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
     const router = useRouter();
 
     useEffect(() => {
+        // Vérifie si l'utilisateur est connecté
+        const user = localStorage.getItem("user");
+        if (!user) {
+            setIsAuthenticated(false);
+            return;
+        } else {
+            setIsAuthenticated(true);
+        }
+
+        // Récupère le panier
         const cart = localStorage.getItem("audelweissCart");
         if (cart) {
             setCartItems(JSON.parse(cart));
         }
     }, []);
+
+    // Sécurité : attend la vérification d'auth
+    if (isAuthenticated === null) {
+        return null; // ou <Loader />
+    }
+
+    if (!isAuthenticated) {
+        return (
+            <div className="flex flex-col items-center justify-center h-[50vh]">
+                <p className="text-lg mb-6">Vous devez être connecté pour accéder à votre panier.</p>
+                <button
+                    onClick={() => router.push("/my-account")}
+                    className="bg-black text-white px-6 py-3 hover:bg-pink-400 transition hover:cursor-pointer"
+                >
+                    Me connecter
+                </button>
+            </div>
+        );
+    }
 
     const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
@@ -37,7 +69,7 @@ export default function CartPage() {
                                 {cartItems.map((item, index) => (
                                     <tr key={index} className="border-b border-gray-400">
                                         <td className="p-4">
-                                            <img src={item.image} alt={item.name} className="w-16 h-16 object-cover" />
+                                            <img src={getStrapiMedia(item.image)} alt={item.name} className="w-16 h-16 object-cover" />
                                         </td>
                                         <td className="p-4">{item.name}</td>
                                         <td className="p-4">{item.price}€</td>

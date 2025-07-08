@@ -87,6 +87,12 @@
     },
     "lastname": {
       "type": "string"
+    },
+    "receipts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::receipt.receipt",
+      "mappedBy": "user"
     }
   }
 }

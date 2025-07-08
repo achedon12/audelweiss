@@ -14,7 +14,7 @@ async function getProductBySlug(slug: string) {
     const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
     if (!token) throw new Error("Le token API n'est pas défini.");
 
-    const path = "/products";
+    const path = "/products?populate=*";
     const urlParamsObject = {
         filters: { slug: slug },
         populate: ["cover", "product_categories"],
@@ -58,16 +58,16 @@ export default async function ProductPage({ params }: Params) {
 
             <div className="ml-80 mt-20 mr-80 pb-20">
                 <div className="flex pb-20">
-                    {/*<img*/}
-                    {/*    src={getStrapiMedia(product.cover?.url)}*/}
-                    {/*    alt={product.name}*/}
-                    {/*    className="mr-20"*/}
-                    {/*    style={{*/}
-                    {/*        width: "60vh",*/}
-                    {/*        height: "60vh",*/}
-                    {/*        objectFit: "cover",*/}
-                    {/*    }}*/}
-                    {/*/>*/}
+                    <img
+                        src={getStrapiMedia(product.cover?.url)}
+                        alt={product.name}
+                        className="mr-20"
+                        style={{
+                            width: "60vh",
+                            height: "60vh",
+                            objectFit: "cover",
+                        }}
+                    />
 
                     <div>
                         <h2 className="text-4xl mb-2">{product.name}</h2>
