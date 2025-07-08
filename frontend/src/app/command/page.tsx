@@ -42,7 +42,7 @@ export default function CommandPage() {
         setErrors({ ...errors, [field]: false });
     };
 
-    const generatePDFBlob = () => {
+    const generatePDFBlob = (filename = "facture.pdf") => {
         const cart = JSON.parse(localStorage.getItem("audelweissCart") || "[]");
         const doc = new jsPDF();
         doc.setFontSize(18);
@@ -67,7 +67,7 @@ export default function CommandPage() {
         doc.text(`Total : ${total.toFixed(2)} €`, 25, y + 10);
         const arrayBuffer = doc.output("arraybuffer");
         const pdfBlob = new Blob([arrayBuffer], { type: "application/pdf" });
-        const file = new File([pdfBlob], "facture.pdf", { type: "application/pdf" });
+        const file = new File([pdfBlob], filename, { type: "application/pdf" });
         docRef.current = doc;
         return file;
 
@@ -93,16 +93,23 @@ export default function CommandPage() {
         const parsedUser = JSON.parse(user);
         const userId = parsedUser?.id;
         if (!userId) {
-            console.error("ID utilisateur introuvable dans localStorage");
             return;
         }
 
-        const pdfFile = generatePDFBlob();
-        const testUrl = URL.createObjectURL(pdfFile);
-        window.open(testUrl);
+        const hashUID = crypto.randomUUID();
+        const safeHash = hashUID.replace(/-/g, "_");
+        const filename = `facture_${safeHash}.pdf`;
+
+        const pdfFile = generatePDFBlob(filename);
 
         const formUpload = new FormData();
-        formUpload.append("files", pdfFile); // plus besoin de nommer ici, c'est déjà un File
+        formUpload.append("files", pdfFile); // le fichier lui-même
+        formUpload.append("fileInfo", JSON.stringify({
+            name: filename,
+            alternativeText: "facture",
+            caption: "facture",
+        }));
+
 
 
         const uploadRes = await fetch("http://localhost:1337/api/upload", {
@@ -125,9 +132,8 @@ export default function CommandPage() {
             return;
         }
 
-        const hashUID = crypto.randomUUID();
-
-        // Création de la receipt avec liaison au fichier ET à l’utilisateur
+        const uploadedFilename = uploadData[0]?.hash+'.pdf';
+        console.log(uploadData[0]);
         const receiptRes = await fetch("http://localhost:1337/api/receipts", {
             method: "POST",
             headers: {
@@ -138,10 +144,12 @@ export default function CommandPage() {
                 data: {
                     hash: hashUID,
                     file: fileId,
-                    user: userId, // 🔗 Liaison à l’utilisateur ici
+                    user: userId,
+                    filename: uploadedFilename,
                 },
             }),
         });
+
 
         if (!receiptRes.ok) {
             console.error("Erreur lors de la création de la receipt");

@@ -71,30 +71,23 @@ const Page = () => {
                     {receipts.map((receipt) => {
                         const { createdAt, file } = receipt;
                         const url = file?.url;
+                        console.log(`${process.env.NEXT_PUBLIC_STRAPI_URL}${file.url}`);
                         const date = new Date(createdAt).toLocaleDateString("fr-FR");
 
                         return (
-                            <li key={receipt.id} className="flex justify-between items-center bg-gray-100 p-4 rounded-xl">
+                            <li key={receipt.id} className="flex justify-between items-center bg-gray-100 p-4 rounded-xl space-x-20">
                                 <span>Commande du {date}</span>
                                 {url ? (
                                     <button
-                                        onClick={async () => {
-                                            const fileUrl = `${process.env.NEXT_PUBLIC_STRAPI_URL}/uploads/facture_${file.hash}.pdf`;
-                                            const response = await fetch(fileUrl);
-                                            const blob = await response.blob();
-                                            const blobUrl = window.URL.createObjectURL(blob);
-                                            const link = document.createElement('a');
-                                            link.href = blobUrl;
-                                            link.download = `facture-${receipt.id}.pdf`; // nom du fichier
-                                            document.body.appendChild(link);
-                                            link.click();
-                                            link.remove();
-                                            window.URL.revokeObjectURL(blobUrl);
+                                        onClick={() => {
+                                            const fileUrl = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${file.url}`;
+                                            window.open(fileUrl, "_blank");
                                         }}
-                                        className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-2 rounded"
+                                        className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-2 rounded hover:cursor-pointer"
                                     >
                                         Télécharger la facture
                                     </button>
+
 
                                 ) : (
                                     <span className="text-gray-400 text-sm">PDF non dispo</span>

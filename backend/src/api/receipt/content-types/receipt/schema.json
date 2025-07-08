@@ -30,6 +30,9 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "receipts"
+    },
+    "filename": {
+      "type": "string"
     }
   }
 }

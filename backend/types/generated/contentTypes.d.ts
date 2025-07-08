@@ -1027,6 +1027,7 @@ export interface ApiReceiptReceipt extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     file: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    filename: Schema.Attribute.String;
     hash: Schema.Attribute.UID;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
