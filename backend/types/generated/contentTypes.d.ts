@@ -982,6 +982,40 @@ export interface ApiProductCategoryProductCategory
   };
 }
 
+export interface ApiProductCommentProductComment
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'product_comments';
+  info: {
+    displayName: 'ProductComment';
+    pluralName: 'product-comments';
+    singularName: 'product-comment';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    comment: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email;
+    isPublish: Schema.Attribute.Boolean;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::product-comment.product-comment'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    product: Schema.Attribute.Relation<'oneToOne', 'api::product.product'>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    website: Schema.Attribute.String;
+  };
+}
+
 export interface ApiProductProduct extends Struct.CollectionTypeSchema {
   collectionName: 'products';
   info: {
@@ -1015,6 +1049,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       'api::product-category.product-category'
     >;
     publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'website.seo', false>;
     short_description: Schema.Attribute.Text;
     slug: Schema.Attribute.UID<'name'>;
     temperature: Schema.Attribute.Integer;
@@ -1733,6 +1768,7 @@ declare module '@strapi/strapi' {
       'api::index.index': ApiIndexIndex;
       'api::legals-mentions-page.legals-mentions-page': ApiLegalsMentionsPageLegalsMentionsPage;
       'api::product-category.product-category': ApiProductCategoryProductCategory;
+      'api::product-comment.product-comment': ApiProductCommentProductComment;
       'api::product.product': ApiProductProduct;
       'api::receipt.receipt': ApiReceiptReceipt;
       'api::sellers-page.sellers-page': ApiSellersPageSellersPage;

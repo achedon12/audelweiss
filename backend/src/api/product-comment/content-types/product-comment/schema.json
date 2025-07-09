@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "product_comments",
+  "info": {
+    "singularName": "product-comment",
+    "pluralName": "product-comments",
+    "displayName": "ProductComment"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "comment": {
+      "type": "text"
+    },
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "website": {
+      "type": "string"
+    },
+    "isPublish": {
+      "type": "boolean"
+    },
+    "product": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::product.product"
+    }
+  }
+}

@@ -311,7 +311,7 @@ export default function ShopPage() {
                                                     setMinPrice(newMin);
                                                 }
                                             }}
-                                            className="range-slider pointer-events-none absolute w-full h-2 appearance-none bg-transparent z-10"
+                                            className="range-slider absolute w-full h-2 appearance-none bg-transparent z-10"
                                         />
                                         <input
                                             type="range"
@@ -326,7 +326,7 @@ export default function ShopPage() {
                                                     setMaxPrice(newMax);
                                                 }
                                             }}
-                                            className="range-slider pointer-events-none absolute w-full h-2 appearance-none bg-transparent z-20"
+                                            className="range-slider absolute w-full h-2 appearance-none bg-transparent z-20"
                                         />
                                         <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-2 bg-gray-200 rounded" />
                                         <div
@@ -351,11 +351,10 @@ export default function ShopPage() {
                                             type="number"
                                             min={minPrice}
                                             max={priceRange[1]}
-                                            value={minPrice}
+                                            value={priceRange[0]} // <- correction ici
                                             onChange={(e) => {
                                                 const value = Number(e.target.value);
-                                                if (value <= maxPrice) {
-                                                    setMinPrice(value);
+                                                if (value <= priceRange[1]) {
                                                     setPriceRange([value, priceRange[1]]);
                                                 }
                                             }}
@@ -369,11 +368,10 @@ export default function ShopPage() {
                                             type="number"
                                             min={priceRange[0]}
                                             max={maxPrice}
-                                            value={maxPrice}
+                                            value={priceRange[1]} // <- correction ici
                                             onChange={(e) => {
                                                 const value = Number(e.target.value);
-                                                if (value >= minPrice) {
-                                                    setMaxPrice(value);
+                                                if (value >= priceRange[0]) {
                                                     setPriceRange([priceRange[0], value]);
                                                 }
                                             }}

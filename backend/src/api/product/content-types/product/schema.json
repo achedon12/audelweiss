@@ -61,6 +61,11 @@
     "slug": {
       "type": "uid",
       "targetField": "name"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "website.seo"
     }
   }
 }
