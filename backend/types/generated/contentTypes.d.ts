@@ -381,12 +381,26 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
-    blocks: Schema.Attribute.DynamicZone<
-      ['shared.media', 'shared.quote', 'shared.rich-text', 'shared.slider']
+    about_career: Schema.Attribute.RichText;
+    about_career_illustration: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
     >;
+    about_career_img: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    about_creator: Schema.Attribute.RichText;
+    about_creator_illustration: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    about_creator_img: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    about_motivations: Schema.Attribute.RichText;
+    bg_text: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    inter_text: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::about.about'> &
       Schema.Attribute.Private;

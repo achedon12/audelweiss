@@ -15,9 +15,60 @@
     "title": {
       "type": "string"
     },
-    "blocks": {
-      "type": "dynamiczone",
-      "components": ["shared.media", "shared.quote", "shared.rich-text", "shared.slider"]
+    "about_creator": {
+      "type": "richtext"
+    },
+    "about_motivations": {
+      "type": "richtext"
+    },
+    "about_career": {
+      "type": "richtext"
+    },
+    "inter_text": {
+      "type": "string"
+    },
+    "bg_text": {
+      "type": "string"
+    },
+    "about_creator_img": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "about_creator_illustration": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "about_career_img": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "about_career_illustration": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }
