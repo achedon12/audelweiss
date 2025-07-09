@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import jsPDF from "jspdf";
 
-export default function CommandPage() {
+export default function OrderPage() {
     const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
     if (!token) throw new Error("Le token API n'est pas défini.");
 

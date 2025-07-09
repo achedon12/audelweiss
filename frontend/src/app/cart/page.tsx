@@ -127,7 +127,7 @@ export default function CartPage() {
                             </div>
 
                             <button
-                                onClick={() => router.push("/command")}
+                                onClick={() => router.push("/order")}
                                 className="bg-black text-white px-6 py-3 hover:bg-pink-400 hover:cursor-pointer transition duration-200"
                             >
                                 Procéder à la commande
