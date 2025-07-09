@@ -6,6 +6,9 @@ export default function OrderPage() {
     const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
     if (!token) throw new Error("Le token API n'est pas défini.");
 
+    const [userAddresses, setUserAddresses] = useState<any[]>([]);
+    const [selectedAddressId, setSelectedAddressId] = useState<string>("");
+
     const [formData, setFormData] = useState({
         nom: "",
         prenom: "",
@@ -22,24 +25,42 @@ export default function OrderPage() {
     const docRef = useRef(null);
 
     useEffect(() => {
-        const user = localStorage.getItem("user");
-        if (user) {
+        const fetchUserAndAddresses = async () => {
+            const userStr = localStorage.getItem("user");
+            if (!userStr) return;
+
+            const parsedUser = JSON.parse(userStr);
+            const userId = parsedUser?.id;
+            setFormData((prev) => ({
+                ...prev,
+                nom: parsedUser?.lastname || "",
+                prenom: parsedUser?.firstname || "",
+            }));
+
             try {
-                const parsedUser = JSON.parse(user);
-                setFormData({
-                    nom: parsedUser.lastname || "",
-                    prenom: parsedUser.firstname || "",
-                    adresse: parsedUser.adresse || "",
+                const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/user-adresses?filters[user][id][$eq]=${userId}&populate=user_address_type`, {
+                    headers: {
+                        Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
+                    },
                 });
+                const json = await res.json();
+                const all = json.data;
+                console.log(all);
+                const deliveryAddresses = all.filter((addr: any) =>
+                    addr.user_address_type?.name === "DELIVERY"
+                );
+                setUserAddresses(deliveryAddresses);
             } catch (error) {
-                console.error("Erreur parsing user :", error);
+                console.error("Erreur de récupération des adresses :", error);
             }
-        }
+        };
+
+        fetchUserAndAddresses();
     }, []);
 
     const handleChange = (field) => (e) => {
-        setFormData({ ...formData, [field]: e.target.value });
-        setErrors({ ...errors, [field]: false });
+        setFormData(prev => ({ ...prev, [field]: e.target.value }));
+        setErrors(prev => ({ ...prev, [field]: false }));
     };
 
     const generatePDFBlob = (filename = "facture.pdf") => {
@@ -192,15 +213,91 @@ export default function OrderPage() {
                         />
                     </div>
                     <div className="pb-10">
-                        <input
-                            className={`border p-2 rounded mt-10 w-[550px] ${
-                                errors.adresse ? "border-red-500" : "border-gray-400"
-                            }`}
-                            type="text"
-                            placeholder="Adresse"
-                            value={formData.adresse}
-                            onChange={handleChange("adresse")}
-                        />
+                        <div className="mt-10 w-[550px]">
+                            {userAddresses.length > 0 ? (
+                                <>
+                                    <select
+                                        className={`border p-2 rounded w-full ${errors.adresse ? "border-red-500" : "border-gray-400"}`}
+                                        value={selectedAddressId}
+                                        onChange={(e) => {
+                                            const selectedId = e.target.value;
+                                            setSelectedAddressId(selectedId);
+
+                                            if (selectedId === "") {
+                                                setFormData(prev => ({
+                                                    ...prev,
+                                                    adresse: "",
+                                                    zipcode: "",
+                                                    city: "",
+                                                }));
+                                                setErrors(prev => ({ ...prev, adresse: true })); // vide = erreur
+                                                return;
+                                            }
+
+                                            if (selectedId === "__new__") {
+                                                setFormData(prev => ({
+                                                    ...prev,
+                                                    adresse: "",
+                                                    zipcode: "",
+                                                    city: "",
+                                                }));
+                                                setErrors(prev => ({ ...prev, adresse: true }));
+                                                return;
+                                            }
+
+                                            const found = userAddresses.find(addr => addr.id === parseInt(selectedId));
+                                            if (found) {
+                                                setFormData(prev => ({
+                                                    ...prev,
+                                                    adresse: found.address,
+                                                    zipcode: found.zipcode,
+                                                    city: found.city,
+                                                }));
+                                                setErrors(prev => ({ ...prev, adresse: false }));
+                                            } else {
+                                                setFormData(prev => ({
+                                                    ...prev,
+                                                    adresse: "",
+                                                    zipcode: "",
+                                                    city: "",
+                                                }));
+                                                setErrors(prev => ({ ...prev, adresse: true }));
+                                            }
+                                        }}
+                                    >
+                                        <option value="">-- Sélectionner une adresse de livraison --</option>
+                                        {userAddresses.map((addr) => (
+                                            <option key={addr.id} value={addr.id}>
+                                                {`${addr.address}, ${addr.zipcode} ${addr.city}`}
+                                            </option>
+                                        ))}
+                                        <option value="__new__">Ajouter une nouvelle adresse</option>
+                                    </select>
+
+                                    {/* Champ libre si nouvelle adresse */}
+                                    {selectedAddressId === "__new__" && (
+                                        <>
+                                            <input
+                                                className={`border p-2 rounded mt-4 w-full ${errors.adresse ? "border-red-500" : "border-gray-400"}`}
+                                                type="text"
+                                                placeholder="Entrez votre adresse"
+                                                value={formData.adresse}
+                                                onChange={handleChange("adresse")}
+                                            />
+                                        </>
+                                    )}
+                                </>
+                            ) : (
+                                <input
+                                    className={`border p-2 rounded mt-4 w-full ${errors.adresse ? "border-red-500" : "border-gray-400"}`}
+                                    type="text"
+                                    placeholder="Entrez votre adresse"
+                                    value={formData.adresse}
+                                    onChange={handleChange("adresse")}
+                                />
+                            )}
+                        </div>
+
                     </div>
                     <button
                         className="mb-15 p-2 pl-4 pr-4 bg-black hover:bg-pink-400 hover:cursor-pointer text-white"
